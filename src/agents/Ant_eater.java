@@ -1,12 +1,15 @@
 package agents;
 
-public class Ant_eater extends Agent{
+
+
+public class Ant_eater extends Agent  {
     Ant_eater()
     {
 
     }
+
     @Override
-    void move() {
-        super.move();
+    public void do_smth() {
+
     }
 }

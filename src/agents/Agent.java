@@ -1,12 +1,20 @@
 package agents;
 
-public class Agent {
+import env.Board_object;
+
+abstract class Agent  implements Board_object{
+    int x;
+    int y;
+    int vector;
+    int range;
+    int health;
     Agent()
     {
 
     }
-    void move()
+    public void do_smth()
     {
 
     }
+
 }
