@@ -1,6 +1,5 @@
 package env;
 
-import agents.Agent;
 
-public class Food extends Agent {
+public class Food  {
 }
