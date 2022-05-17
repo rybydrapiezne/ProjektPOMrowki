@@ -12,4 +12,9 @@ public class Ant extends Agent  {
     public void do_smth() {
         super.do_smth();
     }
+
+    @Override
+    public void chk_surr() {
+        super.chk_surr();
+    }
 }
