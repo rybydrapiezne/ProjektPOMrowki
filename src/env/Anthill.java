@@ -17,6 +17,7 @@ public class Anthill implements Board_object {
     }
     public int ant_count()
     {
-        return 0;
+
+        return ants.size();
     }
 }

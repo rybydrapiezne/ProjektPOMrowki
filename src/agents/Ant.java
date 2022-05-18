@@ -3,9 +3,9 @@ package agents;
 
 public class Ant extends Agent  {
     byte anthill_id;
-    Ant()
+    Ant(int x,int y,int direction,int range,int health)
     {
-
+        super(x,y,direction,range,health);
     }
 
     @Override

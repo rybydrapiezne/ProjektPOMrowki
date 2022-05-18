@@ -8,9 +8,13 @@ abstract class Agent  implements Board_object{
     int vector;
     int range;
     int health;
-    Agent()
+    Agent(int x,int y,int direction,int range,int health)
     {
-
+        this.x=x;
+        this.y=y;
+        vector=direction;
+        this.range=range;
+        this.health=health;
     }
     public void do_smth()
     {
