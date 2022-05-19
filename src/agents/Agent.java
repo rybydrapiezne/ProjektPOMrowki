@@ -22,10 +22,7 @@ abstract class Agent  implements Board_object{
     {
 
     }
-    public void chk_surr()
-    {
 
-    }
 
     @Override
     public int get_range() {

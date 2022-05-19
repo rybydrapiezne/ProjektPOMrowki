@@ -2,10 +2,9 @@ package agents;
 
 
 
-public class Ant_eater extends Agent  {
-    Ant_eater(int x,int y,int direction,int range,int health)
-    {
-        super(x,y,direction,range,health);
+public class Ant_eater extends Agent {
+    Ant_eater(int x, int y, int direction, int range, int health) {
+        super(x, y, direction, range, health);
     }
 
     @Override
@@ -13,8 +12,4 @@ public class Ant_eater extends Agent  {
 
     }
 
-    @Override
-    public void chk_surr() {
-        super.chk_surr();
-    }
 }

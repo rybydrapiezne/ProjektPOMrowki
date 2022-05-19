@@ -13,10 +13,6 @@ public class Ant extends Agent  {
         super.do_smth();
     }
 
-    @Override
-    public void chk_surr() {
-        super.chk_surr();
-    }
 
     @Override
     public String item_on() {//jak juz pisalem wczesniej tylko robocza metoda do mozliwosci wyswietlenia planszy w trybie tekstowym

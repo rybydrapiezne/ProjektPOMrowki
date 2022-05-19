@@ -11,10 +11,7 @@ public class Ant_Queen extends Ant {
         super.do_smth();
     }
 
-    @Override
-    public void chk_surr() {
-        super.chk_surr();
-    }
+
     public void create_anthill()
     {
 
