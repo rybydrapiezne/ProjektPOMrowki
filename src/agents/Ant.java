@@ -17,4 +17,12 @@ public class Ant extends Agent  {
     public void chk_surr() {
         super.chk_surr();
     }
+
+    @Override
+    public String item_on() {//jak juz pisalem wczesniej tylko robocza metoda do mozliwosci wyswietlenia planszy w trybie tekstowym
+        String k;
+        k="Ant ";
+        k+=anthill_id;
+        return k;
+    }
 }

@@ -31,7 +31,7 @@ public class Board {
     {
 
     }
-     public List<Board_object> chk_surr(Board_object item)
+     public List<Board_object> chk_surr(Board_object item)//metoda sprawdzajaca sasiadow i zwracajaca liste wszystkich sasiadow (musze sie jeszcze zastanowic czy jest dobrze)
     {
         ArrayList<Board_object> surroundings=new ArrayList<>();
         Point position=item.position();
@@ -52,15 +52,17 @@ public class Board {
                }
                    return surroundings;
     }
-    public void set_Board_object(Board_object thing,int x,int y)
+    public void set_Board_object(Board_object thing,int x,int y)//metoda sluzaca do wpisania obiektu do listy
     {
-        if(board.get(x).get(y)==null)
+        if(board.get(x).get(y).contains(null))
         {
+            board.get(x).get(y).clear();
             board.get(x).get(y).add(thing);
         }
+        else
+            board.get(x).get(y).add(thing);
+
     }
-    public static void main(String [] args)
-    {
-        Board x=new Board(10);
-    }
+
+
 }

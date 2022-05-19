@@ -27,4 +27,9 @@ public class Food implements Board_object  {
     public Point position() {
         return null;
     }
+
+    @Override
+    public String item_on() {
+        return "Food"+quality;
+    }
 }

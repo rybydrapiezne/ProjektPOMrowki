@@ -33,8 +33,13 @@ abstract class Agent  implements Board_object{
     }
 
     @Override
-    public Point position() {
+    public Point position() {//metoda sluzaca do zwrocenia puntku w ktorym znajduje sie obiekt
 
         return new Point(x,y);
+    }
+
+    @Override
+    public String item_on() {
+        return null;
     }
 }

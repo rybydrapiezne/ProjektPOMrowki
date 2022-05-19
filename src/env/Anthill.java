@@ -43,4 +43,9 @@ public class Anthill implements Board_object {
     public Point position() {
         return null;
     }
+
+    @Override
+    public String item_on() {
+        return "Anthill"+id_anthill;
+    }
 }
