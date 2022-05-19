@@ -2,6 +2,8 @@ package agents;
 
 import env.Board_object;
 
+import java.awt.*;
+
 abstract class Agent  implements Board_object{
     int x;
     int y;
@@ -23,5 +25,16 @@ abstract class Agent  implements Board_object{
     public void chk_surr()
     {
 
+    }
+
+    @Override
+    public int get_range() {
+        return range;
+    }
+
+    @Override
+    public Point position() {
+
+        return new Point(x,y);
     }
 }

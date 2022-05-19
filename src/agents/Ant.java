@@ -3,7 +3,7 @@ package agents;
 
 public class Ant extends Agent  {
     byte anthill_id;
-    Ant(int x,int y,int direction,int range,int health)
+    public Ant(int x, int y, int direction, int range, int health)
     {
         super(x,y,direction,range,health);
     }
