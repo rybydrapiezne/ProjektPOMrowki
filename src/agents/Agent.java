@@ -39,4 +39,7 @@ abstract class Agent  implements Board_object{
     public String item_on() {
         return null;
     }
+
+    @Override
+    public void paint_on_board(Graphics p){}
 }

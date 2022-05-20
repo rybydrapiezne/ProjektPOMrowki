@@ -1,6 +1,8 @@
 package agents;
 
 
+import java.awt.*;
+
 public class Ant extends Agent  {
     byte anthill_id;
     public Ant(int x, int y, int direction, int range, int health)
@@ -21,4 +23,12 @@ public class Ant extends Agent  {
         k+=anthill_id;
         return k;
     }
+
+    //---GUI---
+    @Override
+    public void paint_on_board( Graphics p){
+
+    }
+
+
 }

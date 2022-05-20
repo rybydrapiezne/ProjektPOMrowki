@@ -1,10 +1,11 @@
 package env;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.math.*;
-public class Board {
+public class Board extends JPanel {
     ArrayList<ArrayList<ArrayList<Board_object>>> board;
     int size;
     Anthill anthill_red;
@@ -21,6 +22,14 @@ public class Board {
                 board.get(i).get(j).add(null);
             }
             }
+
+        //------GUI---
+        /*JFrame frame = new JFrame("Ants Simulation");
+        frame.setSize(500,500);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        frame.setVisible(true);
+        frame.add(this);*/
 
     }
     void draw_board()

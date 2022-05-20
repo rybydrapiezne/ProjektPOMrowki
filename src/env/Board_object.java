@@ -7,4 +7,7 @@ public interface Board_object {
    int get_range();
    Point position();
    String item_on();//metoda sluzaca do wyswietlania w pozniejszych etapach jej nie bedzie
+
+
+   void paint_on_board(Graphics p);
 }
