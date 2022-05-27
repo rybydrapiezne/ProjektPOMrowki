@@ -34,11 +34,43 @@ public class Board extends JPanel {
     }
     void draw_board()
     {
-
+        for(int i=0;i<board.size();i++)//wyswietlanie tekstowe planszy
+        {
+            if(board.get(i)!=null) {
+                for (int j = 0; j < board.get(i).size(); j++) {
+                    if (board.get(i).get(j) != null) {
+                        for (int k = 0; k < board.get(i).get(j).size(); k++) {
+                            if (board.get(i).get(j).get(k) != null)
+                                System.out.print(board.get(i).get(j).get(k).item_on());
+                            else
+                                System.out.print(0);
+                        }
+                    }
+                }
+                System.out.println();
+            }
+        }
     }
     public void proceed()
     {
+        for(int i=0;i<board.size();i++)//wyswietlanie tekstowe planszy
+        {
+            if(board.get(i)!=null) {
+                for (int j = 0; j < board.get(i).size(); j++) {
+                    if (board.get(i).get(j) != null) {
+                        for (int k = 0; k < board.get(i).get(j).size(); k++) {
+                            if (board.get(i).get(j).get(k) != null)
+                            {
+                                board.get(i).get(j).get(k).do_smth();
+                                move_Board_object(board.get(i).get(j).get(k),new Point(i,j));
+                            }
 
+                        }
+                    }
+                }
+
+            }
+        }
     }
      public List<Board_object> chk_surr(Board_object item)//metoda sprawdzajaca sasiadow i zwracajaca liste wszystkich sasiadow (musze sie jeszcze zastanowic czy jest dobrze)
     {
@@ -70,6 +102,19 @@ public class Board extends JPanel {
         }
         else
             board.get(x).get(y).add(thing);
+
+    }
+    public void move_Board_object(Board_object thing,Point old_position)
+    {
+        if(thing.position()!=null)
+        {
+            if(thing.position().x!=old_position.x||thing.position().y!=old_position.y)
+            {
+                board.get(old_position.x).get(old_position.y).remove(thing);
+                board.get(old_position.x).get(old_position.y).trimToSize();
+                board.get(thing.position().x).get(thing.position().y).add(thing);
+            }
+        }
 
     }
 

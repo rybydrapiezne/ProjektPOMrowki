@@ -5,9 +5,9 @@ import java.awt.*;
 
 public class Ant extends Agent  {
     byte anthill_id;
-    public Ant(int x, int y, int direction, int range, int health)
+    public Ant(int x, int y, int direction, int range, int health,int x_move_range,int y_move_range)
     {
-        super(x,y,direction,range,health);
+        super(x,y,direction,range,health,x_move_range,y_move_range);
     }
 
     @Override
