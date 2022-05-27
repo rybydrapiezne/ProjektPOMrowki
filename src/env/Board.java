@@ -23,14 +23,6 @@ public class Board extends JPanel {
             }
             }
 
-        //------GUI---
-        /*JFrame frame = new JFrame("Ants Simulation");
-        frame.setSize(500,500);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-        frame.setVisible(true);
-        frame.add(this);*/
-
     }
     void draw_board()
     {
@@ -118,5 +110,16 @@ public class Board extends JPanel {
 
     }
 
+    public void delete_Board_object(Board_object thing){
+        board.get(thing.position().x).get(thing.position().y).remove(thing);
+        board.get(thing.position().x).get(thing.position().y).trimToSize();
+    }
+
+    public boolean check_ant_food_collision(Board_object ant, Board_object food){
+       if (ant.position().x == food.position().x && ant.position().y == food.position().y){
+           return true;
+       }
+       return false;
+    }
 
 }
