@@ -1,5 +1,7 @@
 package env;
 
+import agents.Ant;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -14,10 +16,10 @@ public class Simulation extends JPanel {
     Simulation()
     {
         simulation_board=new Board(10);
-     /*   anthill1=new Anthill(true,(byte)1,10);
-        anthill2=new Anthill(true,(byte)2,10);
-        simulation_board.set_Board_object(anthill1,0,0);//ustawienie obu mrowisk na planszy
-        simulation_board.set_Board_object(anthill2,9,9);*/
+//        anthill1=new Anthill(true,(byte)1,10);
+//        anthill2=new Anthill(true,(byte)2,10);
+//        simulation_board.set_Board_object(anthill1,0,0);//ustawienie obu mrowisk na planszy
+//        simulation_board.set_Board_object(anthill2,9,9);
 
 
         JFrame frame = new JFrame("Ants Simulation");
@@ -38,7 +40,7 @@ public class Simulation extends JPanel {
         //anthills.add(anthill1);??
         //anthills.add(anthill2);??
 
-        for(int i = 0; i< (simulation_board.size/3); i++){
+        for(int i = 0; i< (simulation_board.size/2); i++){
             Food food_object = new Food(Quality_Of_Food.HIGH, simulation_board.size);
             simulation_board.set_Board_object(food_object, food_object.x, food_object.y);
 
@@ -51,11 +53,12 @@ public class Simulation extends JPanel {
     {
 
         Simulation sup_sim=new Simulation();
-      sup_sim.simulation_board.draw_board();
-      sup_sim.simulation_board.proceed();
-      sup_sim.simulation_board.draw_board();
-      sup_sim.simulation_board.proceed();
-      sup_sim.simulation_board.draw_board();
+        sup_sim.simulation_board.draw_board();
+
+      for(int i=0; i<11; i++) {
+          sup_sim.simulation_board.proceed(sup_sim);
+          sup_sim.simulation_board.draw_board();
+      }
 
     }
 

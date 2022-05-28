@@ -46,7 +46,7 @@ public class Food implements Board_object  {
 
     @Override
     public Point position() {
-        return null;
+        return new Point(x,y);
     }
 
     @Override
@@ -61,4 +61,5 @@ public class Food implements Board_object  {
         p.fillOval(x,y, width, height );
 
     }
+
 }

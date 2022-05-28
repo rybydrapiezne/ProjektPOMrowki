@@ -6,8 +6,8 @@ import java.awt.*;
 import java.util.Random;
 
 abstract class Agent  implements Board_object{
-    int x;
-    int y;
+    public int x;
+    public int y;
     int vector;
     int range;
     int health;

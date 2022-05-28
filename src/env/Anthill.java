@@ -15,16 +15,18 @@ public class Anthill implements Board_object {
     int width = 20;
     int height = 20;
 
-    int x, y;
+    int x, y, x_max, y_max;
 
     public Anthill(boolean is_main, byte id_anthill, int ant_number, int x, int y,int x_max,int y_max) {
         this.is_main = is_main;
         this.id_anthill = id_anthill;
         this.x = x;
         this.y = y;
+        this.x_max = x_max;
+        this.y_max = y_max;
         ants = new ArrayList<>();
         for (int i = 0; i < ant_number; i++) {
-            ants.add(new Ant(x, y, -1, 1, 1,x_max,y_max));
+            ants.add(new Ant(x, y, -1, 1, 1,x_max,y_max, id_anthill));
         }
 
 
@@ -33,6 +35,12 @@ public class Anthill implements Board_object {
     @Override
     public void do_smth() {
 
+    }
+
+    public Ant generate_ant(){
+        Ant ant = new Ant(x,y, -1, 1, 1, x_max,y_max, id_anthill);
+        ants.add(ant);
+        return ant;
     }
 
     public int ant_count() {

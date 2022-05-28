@@ -1,5 +1,7 @@
 package env;
 
+import agents.Ant;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -43,7 +45,7 @@ public class Board extends JPanel {
             }
         }
     }
-    public void proceed()
+    public void proceed(Simulation sim)
     {
         for(int i=0;i<board.size();i++)//wyswietlanie tekstowe planszy
         {
@@ -63,6 +65,23 @@ public class Board extends JPanel {
 
             }
         }
+
+
+
+        for(int i=0;i<board.size();i++)
+        {
+            if(board.get(i)!=null) {
+                for (int j = 0; j < board.get(i).size(); j++) {
+                    if (board.get(i).get(j) != null) {
+                        ant_eats_food(board.get(i).get(j),sim);
+                    }
+                }
+
+            }
+        }
+
+
+
     }
      public List<Board_object> chk_surr(Board_object item)//metoda sprawdzajaca sasiadow i zwracajaca liste wszystkich sasiadow (musze sie jeszcze zastanowic czy jest dobrze)
     {
@@ -110,16 +129,48 @@ public class Board extends JPanel {
 
     }
 
-    public void delete_Board_object(Board_object thing){
-        board.get(thing.position().x).get(thing.position().y).remove(thing);
-        board.get(thing.position().x).get(thing.position().y).trimToSize();
-    }
+//    public void delete_Board_object(Board_object thing){             - to sie chyba nie przyda
+//        board.get(thing.position().x).get(thing.position().y).remove(thing);
+//        board.get(thing.position().x).get(thing.position().y).trimToSize();
+//    }
 
-    public boolean check_ant_food_collision(Board_object ant, Board_object food){
-       if (ant.position().x == food.position().x && ant.position().y == food.position().y){
-           return true;
-       }
-       return false;
+
+    public void ant_eats_food(ArrayList<Board_object> list, Simulation sim){        //kolizja mrowki i jedzenia
+
+        Ant ant = null;
+        Food food = null;
+        for(Board_object object: list){
+
+            if(object != null) {
+                if(object instanceof Ant){
+                    ant = (Ant)object;
+                }
+                if(object instanceof Food){
+                    food = (Food)object;
+                }
+
+            }
+        }
+
+        if(ant!=null && food!=null){
+            board.get(food.position().x).get(food.position().y).remove(food);
+            Food food_one = new Food(Quality_Of_Food.HIGH, size);
+            set_Board_object(food_one, food_one.x, food_one.y);
+
+
+            System.out.println("\n Ant eats food, anthillid: "+ ant.anthill_id+ "\n");      //sprawdzanie czy dziala, mozna potem usunac
+
+            if( ant.anthill_id ==1){
+                Ant ant_one = sim.anthill1.generate_ant();
+                set_Board_object(ant_one,ant_one.position().x,ant_one.position().y);
+            }
+            if(ant.anthill_id ==2){
+                Ant ant_one = sim.anthill2.generate_ant();
+                set_Board_object(ant_one,ant_one.position().x,ant_one.position().y);
+            }
+
+
+        }
     }
 
 }
