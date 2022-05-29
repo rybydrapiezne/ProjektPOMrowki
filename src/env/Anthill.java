@@ -37,12 +37,16 @@ public class Anthill implements Board_object {
 
     }
 
-    public Ant generate_ant(){
+    public void generate_ant(){
         Ant ant = new Ant(x,y, -1, 1, 1, x_max,y_max, id_anthill);
         ants.add(ant);
-        return ant;
+        
     }
+    public void delete_ant(Ant ant)
+    {
+        ants.remove(ant);
 
+    }
     public int ant_count() {
 
         return ants.size();
@@ -59,7 +63,7 @@ public class Anthill implements Board_object {
 
     @Override
     public Point position() {
-        return null;
+        return new Point(x,y);
     }
 
     @Override

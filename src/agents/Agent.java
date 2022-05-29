@@ -7,9 +7,11 @@ import java.util.Random;
 
 abstract class Agent  implements Board_object{
     public int x;
+
     public int y;
     int vector;
-    int range;
+    private int range;
+    private
     int health;
     Random rand;
     int x_move_range;

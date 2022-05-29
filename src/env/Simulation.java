@@ -7,7 +7,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Simulation extends JPanel {
-    Board simulation_board;
+    private Board simulation_board;
     Anthill anthill1;
     Anthill anthill2;
 
@@ -28,14 +28,14 @@ public class Simulation extends JPanel {
 
         frame.setVisible(true);
         frame.add(this);
-
-        anthill1=new Anthill(true,(byte)1,10, 0, 0,10,10);
-        anthill2=new Anthill(true,(byte)2,10, simulation_board.size-1, simulation_board.size-1,10,10);
+        anthill1=new Anthill(true,(byte)1,10, 0, 0,simulation_board.size-1,simulation_board.size-1);
+        anthill2=new Anthill(true,(byte)2,10, simulation_board.size-1, simulation_board.size-1,simulation_board.size-1,simulation_board.size-1);
         simulation_board.set_Board_object(anthill1, anthill1.x, anthill1.y); //ustawienie obu mrowisk na planszy
         simulation_board.set_Board_object(anthill2, anthill2.x, anthill2.y);
         for(int i=0;i<anthill1.ant_count();i++)
         {
             simulation_board.set_Board_object(anthill1.get_ant(i),anthill1.get_ant(i).position().x,anthill1.get_ant(i).position().y);
+           simulation_board.set_Board_object(anthill2.get_ant(i),anthill2.get_ant(i).position().x,anthill2.get_ant(i).position().y);
         }
         //anthills.add(anthill1);??
         //anthills.add(anthill2);??
@@ -58,6 +58,8 @@ public class Simulation extends JPanel {
       for(int i=0; i<11; i++) {
           sup_sim.simulation_board.proceed(sup_sim);
           sup_sim.simulation_board.draw_board();
+          System.out.println(sup_sim.anthill1.ant_count());
+          System.out.println(sup_sim.anthill2.ant_count());
       }
 
     }
