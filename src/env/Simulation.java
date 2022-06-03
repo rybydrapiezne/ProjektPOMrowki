@@ -4,30 +4,23 @@ import agents.Ant;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class Simulation extends JPanel {
+public class Simulation extends JPanel implements ActionListener {
     private Board simulation_board;
     Anthill anthill1;
     Anthill anthill2;
 
     ArrayList<Food> food = new ArrayList<>();
     ArrayList<Anthill> anthills = new ArrayList<>();
+
+    Timer animationtimer;
     Simulation()
     {
         simulation_board=new Board(10);
-//        anthill1=new Anthill(true,(byte)1,10);
-//        anthill2=new Anthill(true,(byte)2,10);
-//        simulation_board.set_Board_object(anthill1,0,0);//ustawienie obu mrowisk na planszy
-//        simulation_board.set_Board_object(anthill2,9,9);
 
-
-        JFrame frame = new JFrame("Ants Simulation");
-        frame.setSize(simulation_board.size,simulation_board.size);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-        frame.setVisible(true);
-        frame.add(this);
         anthill1=new Anthill(true,(byte)1,10, 0, 0,simulation_board.size-1,simulation_board.size-1);
         anthill2=new Anthill(true,(byte)2,10, simulation_board.size-1, simulation_board.size-1,simulation_board.size-1,simulation_board.size-1);
         simulation_board.set_Board_object(anthill1, anthill1.x, anthill1.y); //ustawienie obu mrowisk na planszy
@@ -37,41 +30,29 @@ public class Simulation extends JPanel {
             simulation_board.set_Board_object(anthill1.get_ant(i),anthill1.get_ant(i).position().x,anthill1.get_ant(i).position().y);
            simulation_board.set_Board_object(anthill2.get_ant(i),anthill2.get_ant(i).position().x,anthill2.get_ant(i).position().y);
         }
-        //anthills.add(anthill1);??
-        //anthills.add(anthill2);??
 
         for(int i = 0; i< (simulation_board.size/2); i++){
             Food food_object = new Food(Quality_Of_Food.HIGH, simulation_board.size);
             simulation_board.set_Board_object(food_object, food_object.x, food_object.y);
-
-            //food.add(food_object); ?? po co to
         }
 
+        animationtimer = new Timer(100, this);
+        animationtimer.start();
     }
 
     public static void main(String [] args)
     {
 
         Simulation sup_sim=new Simulation();
-        sup_sim.simulation_board.draw_board();
-
-      for(int i=0; i<11; i++) {
-          sup_sim.simulation_board.proceed(sup_sim);
-          sup_sim.simulation_board.draw_board();
-          System.out.println(sup_sim.anthill1.ant_count());
-          System.out.println(sup_sim.anthill2.ant_count());
-      }
 
     }
 
-    public void paint(Graphics p){
-        for (Food f: food){
-            f.paint_on_board(p);
-        }
-
-        for (Anthill ah: anthills) {
-            ah.paint_on_board(p);
-        }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        simulation_board.draw_board();
+        simulation_board.proceed(this);
+        simulation_board.repaint();
+        System.out.println(anthill1.ant_count());
+        System.out.println(anthill2.ant_count());
     }
-
 }

@@ -12,8 +12,8 @@ public class Anthill implements Board_object {
     Ant_Queen queen;
     boolean is_main;
     byte id_anthill;
-    int width = 20;
-    int height = 20;
+    int width = 25;
+    int height = 25;
 
     int x, y, x_max, y_max;
 
@@ -84,7 +84,7 @@ public class Anthill implements Board_object {
         } else {
             p.setColor(Color.BLACK);
         }
-        p.fillOval(x, y, width, height);
+        p.fillOval(x*20, y*20, width, height);
     }
 }
 

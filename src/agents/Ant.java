@@ -28,7 +28,12 @@ public class Ant extends Agent  {
     //---GUI---
     @Override
     public void paint_on_board( Graphics p){
+        switch(anthill_id) {
+            case 1 -> p.setColor(Color.CYAN);
+            case 2 -> p.setColor(Color.ORANGE);
+        }
 
+        p.fillOval(x*20,y*20,20,20);
     }
 
 

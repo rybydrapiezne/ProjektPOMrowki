@@ -4,6 +4,8 @@ import agents.Ant;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.math.*;
@@ -14,6 +16,7 @@ public class Board extends JPanel {
     int size;
     Anthill anthill_red;
     Anthill anthill_blue;
+
     Board(int size)
     {
         this.size=size;
@@ -26,6 +29,13 @@ public class Board extends JPanel {
                 board.get(i).get(j).add(null);
             }
             }
+
+        JFrame frame = new JFrame("Ants Simulation");
+        frame.setSize(500,500);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        frame.setVisible(true);
+        frame.add(this);
 
     }
     void draw_board()
@@ -140,10 +150,6 @@ public class Board extends JPanel {
 
     }
 
-//    public void delete_Board_object(Board_object thing){             - to sie chyba nie przyda
-//        board.get(thing.position().x).get(thing.position().y).remove(thing);
-//        board.get(thing.position().x).get(thing.position().y).trimToSize();
-//    }
     public void ant_collision(ArrayList<Board_object>list, Simulation sim)
     {
         Ant ant1=null;
@@ -244,7 +250,7 @@ public class Board extends JPanel {
             set_Board_object(food_one, food_one.x, food_one.y);
 
 
-            System.out.println("\n Ant eats food, anthillid: "+ ant.anthill_id+ "\n");      //sprawdzanie czy dziala, mozna potem usunac
+            System.out.println("Ant eats food, anthillid: "+ ant.anthill_id+ "\n");      //sprawdzanie czy dziala, mozna potem usunac
 
 
 
@@ -253,4 +259,42 @@ public class Board extends JPanel {
         return -1;
     }
 
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+
+        Anthill anthill = null;
+        Ant ant = null;
+        Food food = null;
+
+        for(int i=0;i<board.size();i++)
+        {
+            if(board.get(i)!=null) {
+                for (int j = 0; j < board.get(i).size(); j++) {
+                    if (board.get(i).get(j) != null) {
+                        for (int k = 0; k < board.get(i).get(j).size(); k++) {
+                            if (board.get(i).get(j).get(k) != null)
+                            {
+                                if(board.get(i).get(j).get(k) instanceof Anthill){
+                                    anthill = (Anthill)board.get(i).get(j).get(k);
+                                    anthill.paint_on_board(g);
+                                }
+                                if (board.get(i).get(j).get(k) instanceof Ant){
+                                    ant = (Ant)board.get(i).get(j).get(k);
+                                    ant.paint_on_board(g);
+                                }
+                                if(board.get(i).get(j).get(k) instanceof Food){
+                                    food = (Food)board.get(i).get(j).get(k);
+                                    food.paint_on_board(g);
+                                }
+                            }
+
+                        }
+                    }
+                }
+
+            }
+        }
+
+    }
 }

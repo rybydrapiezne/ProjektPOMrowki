@@ -10,8 +10,8 @@ enum Quality_Of_Food  {
 public class Food implements Board_object  {
     Quality_Of_Food quality;
     int iteration;
-    int height =4;
-    int width = 4;
+    int height =15;
+    int width = 15;
     int x, y, board_size;
 
 
@@ -56,9 +56,12 @@ public class Food implements Board_object  {
 
     @Override
     public void paint_on_board(Graphics p) {
-
-        p.setColor(Color.orange);
-        p.fillOval(x,y, width, height );
+        switch(quality){
+            case LOW -> p.setColor(Color.GRAY);
+            case MEDIUM -> p.setColor(Color.DARK_GRAY);
+            case HIGH -> p.setColor(Color.BLACK);
+        }
+        p.fillOval(x*20,y*20,width, height );
 
     }
 
