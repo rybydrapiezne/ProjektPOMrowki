@@ -12,14 +12,10 @@ public class Simulation extends JPanel implements ActionListener {
     private Board simulation_board;
     Anthill anthill1;
     Anthill anthill2;
-
-    ArrayList<Food> food = new ArrayList<>();
-    ArrayList<Anthill> anthills = new ArrayList<>();
-
     Timer animationtimer;
     Simulation()
     {
-        simulation_board=new Board(10);
+        simulation_board=new Board(25);
 
         anthill1=new Anthill(true,(byte)1,10, 0, 0,simulation_board.size-1,simulation_board.size-1);
         anthill2=new Anthill(true,(byte)2,10, simulation_board.size-1, simulation_board.size-1,simulation_board.size-1,simulation_board.size-1);
@@ -42,17 +38,15 @@ public class Simulation extends JPanel implements ActionListener {
 
     public static void main(String [] args)
     {
-
         Simulation sup_sim=new Simulation();
-
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        simulation_board.draw_board();
+        //simulation_board.draw_board();
         simulation_board.proceed(this);
         simulation_board.repaint();
-        System.out.println(anthill1.ant_count());
-        System.out.println(anthill2.ant_count());
+//        System.out.println(anthill1.ant_count());
+//        System.out.println(anthill2.ant_count());
     }
 }

@@ -28,13 +28,11 @@ public class Food implements Board_object  {
         iteration++;
         switch (iteration)
         {
-            case(1):
+            case(20):
                 quality=Quality_Of_Food.MEDIUM;
                 break;
-            case(2):
+            case(40):
                 quality=Quality_Of_Food.LOW;
-                break;
-            case(3):
                 break;
         }
     }

@@ -2,6 +2,7 @@ package env;
 
 import agents.Ant;
 import agents.Ant_Queen;
+import agents.Flying_ant;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -41,6 +42,11 @@ public class Anthill implements Board_object {
         Ant ant = new Ant(x,y, -1, 1, 1, x_max,y_max, id_anthill);
         ants.add(ant);
         
+    }
+
+    public void generate_f_ant(){
+        Flying_ant f_ant = new Flying_ant(x, y, -1, 1, 1, x_max, y_max, id_anthill);
+        ants.add(f_ant);
     }
     public void delete_ant(Ant ant)
     {
