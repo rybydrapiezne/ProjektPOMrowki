@@ -39,11 +39,12 @@ public class Simulation extends JPanel implements ActionListener {
     public static void main(String [] args)
     {
         Simulation sup_sim=new Simulation();
+      //  sup_sim.simulation_board.draw_board();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        //simulation_board.draw_board();
+        simulation_board.draw_board();
         simulation_board.proceed(this);
         simulation_board.repaint();
 //        System.out.println(anthill1.ant_count());

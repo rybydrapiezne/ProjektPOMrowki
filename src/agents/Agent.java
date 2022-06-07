@@ -32,11 +32,13 @@ abstract class Agent  implements Board_object{
         int x_temp;
         int y_temp;
         do {
-            x_temp=rand.nextInt(-range-1,range+1);
-            y_temp=rand.nextInt(-range-1,range+1);
+            x_temp=rand.nextInt(-range,range+1);
+            y_temp=rand.nextInt(-range,range+1);
         }while((x+x_temp>x_move_range||x+x_temp<0||y+y_temp>y_move_range||y+y_temp<0)||(x_temp==0||y_temp==0));
         x+=x_temp;
         y+=y_temp;
+        //System.out.println(x);
+        //System.out.println(y);
     }
 
 

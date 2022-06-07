@@ -41,7 +41,7 @@ public class Anthill implements Board_object {
     public void generate_ant(){
         Ant ant = new Ant(x,y, -1, 1, 1, x_max,y_max, id_anthill);
         ants.add(ant);
-        
+
     }
 
     public void generate_f_ant(){

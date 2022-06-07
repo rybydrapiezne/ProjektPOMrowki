@@ -1,6 +1,7 @@
 package env;
 
 import java.awt.*;
+import java.util.Random;
 
 enum Quality_Of_Food  {
     LOW,MEDIUM,HIGH
@@ -19,8 +20,11 @@ public class Food implements Board_object  {
     {
         this.quality=quality;
         this.board_size = board_size;
-        x = (int)((Math.random()*((board_size-1) - 0)) +0);//czemu -0??
-        y =(int)((Math.random()*((board_size-1) - 0)) +0);
+        Random rand=new Random();
+        //x = (int)((Math.random()*((board_size-1))));//czemu -0??
+        //y =(int)((Math.random()*((board_size-1) - 0)) +0);
+            x=rand.nextInt(0,board_size-1);
+            y=rand.nextInt(0,board_size-1);
         iteration=0;
     }
     @Override
