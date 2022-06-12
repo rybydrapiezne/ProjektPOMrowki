@@ -16,11 +16,10 @@ abstract class Agent  implements Board_object{
     Random rand;
     int x_move_range;
     int y_move_range;
-    Agent(int x,int y,int direction,int range,int health,int x_move_range,int y_move_range)
+    Agent(int x,int y,int range,int health,int x_move_range,int y_move_range)
     {
         this.x=x;
         this.y=y;
-        vector=direction;
         this.range=range;
         this.health=health;
         rand=new Random();

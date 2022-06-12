@@ -1,6 +1,7 @@
 package env;
 
 import agents.Ant;
+import agents.Ant_eater;
 import agents.Flying_ant;
 
 import javax.swing.*;
@@ -54,6 +55,7 @@ public class Board extends JPanel {
                 System.out.println();
             }
         }
+        System.out.println();
     }
     public void proceed(Simulation sim)
     {
@@ -77,57 +79,14 @@ public class Board extends JPanel {
         }
 
 
-        byte id;
-        Quality_Of_Food qua;
-        ArrayList<Object> list;
+
         for(int i=0;i<board.size();i++)
         {
             if(board.get(i)!=null) {
                 for (int j = 0; j < board.get(i).size(); j++) {
                     if (board.get(i).get(j) != null) {
-                        list = ant_food_collision(board.get(i).get(j));
-                        if ( list != null) {
-                                id = (byte) list.get(0);
-                                qua = (Quality_Of_Food) list.get(1);
 
-                                if (id == 1) {
-                                    switch (qua) {
-                                        case LOW:
-                                            sim.anthill1.generate_ant();
-                                            set_Board_object(sim.anthill1.get_ant(sim.anthill1.ant_count() - 1), sim.anthill1.x, sim.anthill1.y);
-                                            break;
-                                        case MEDIUM:
-                                            for (int l = 0; l < 2; l++) {
-                                                sim.anthill1.generate_ant();
-                                                set_Board_object(sim.anthill1.get_ant(sim.anthill1.ant_count() - 1), sim.anthill1.x, sim.anthill1.y);
-                                            }
-                                            break;
-                                        case HIGH:
-                                            sim.anthill1.generate_f_ant();
-                                            set_Board_object(sim.anthill1.get_ant(sim.anthill1.ant_count() - 1), sim.anthill1.x, sim.anthill1.y);
-                                            break;
-                                    }
-                                } else if (id == 2) {
-                                    switch (qua) {
-                                        case LOW:
-                                            sim.anthill2.generate_ant();
-                                            set_Board_object(sim.anthill2.get_ant(sim.anthill2.ant_count() - 1), sim.anthill2.x, sim.anthill2.y);
-                                            break;
-                                        case MEDIUM:
-                                            for (int l = 0; l < 2; l++) {
-                                                sim.anthill2.generate_ant();
-                                                set_Board_object(sim.anthill2.get_ant(sim.anthill2.ant_count() - 1), sim.anthill2.x, sim.anthill2.y);
-                                            }
-                                            break;
-                                        case HIGH:
-                                            sim.anthill2.generate_f_ant();
-                                            set_Board_object(sim.anthill2.get_ant(sim.anthill2.ant_count() - 1), sim.anthill2.x, sim.anthill2.y);
-                                            break;
-                                    }
 
-                            }
-
-                        }
                         ant_collision(board.get(i).get(j),sim);
                     }
                 }
@@ -184,113 +143,216 @@ public class Board extends JPanel {
 
     }
 
-    public void ant_collision(ArrayList<Board_object>list, Simulation sim)
-    {
-        Ant ant1=null;
-        Ant ant2=null;
+    public void ant_collision(ArrayList<Board_object>list, Simulation sim) {
+        int id;
+        Ant ant1 = null;
+        Ant ant2 = null;
+        Ant ant_temp = null;
+        Food food = null;
+        Ant_eater ant_eater = null;
         int one;
         int second;
-        Random rand=new Random();
-        for(int i=0;i<list.size();i++)
-        {
+        Random rand = new Random();
+        for (int i = 0; i < list.size(); i++) {
 
-            if(list.get(i)!=null) {
+            if (list.get(i) != null) {
 
                 if (ant1 == null) {
-                    if(list.get(i) instanceof Ant)
-                    {
-                        ant1=(Ant)list.get(i);
+                    if (list.get(i) instanceof Ant) {
+                        ant1 = (Ant) list.get(i);
+                        continue;
+                    }
+                    if (list.get(i) instanceof Flying_ant) {
+                        ant1 = (Flying_ant) list.get(i);
                         continue;
                     }
                 }
-                if(ant2==null)
+                if (ant2 == null) {
+                    if (list.get(i) instanceof Ant) {
+                        if (((Ant) list.get(i)).anthill_id != ant1.anthill_id) {
+                            ant2 = (Ant) list.get(i);
+                            continue;
+                        }
+                    }
+                    if (list.get(i) instanceof Flying_ant) {
+                        if (((Ant) list.get(i)).anthill_id != ant1.anthill_id) {
+                            ant2 = (Flying_ant) list.get(i);
+                        }
+                    }
+                }
+                if (list.get(i) instanceof Food) {
+                    food = (Food) list.get(i);
+                }
+                if (list.get(i) instanceof Ant_eater) {
+                    ant_eater = (Ant_eater) list.get(i);
+                }
+            }
+
+        }
+        if (ant1 != null && ant2 != null) {
+            if (sim.anthill1.id_anthill == ant1.anthill_id) {
+                do {
+                    one = rand.nextInt(0, sim.anthill1.ant_count());
+                    second = rand.nextInt(0, sim.anthill2.ant_count());
+                } while (one == second);
+                if (one > second) {
+                    sim.anthill2.delete_ant(ant2);
+                    board.get(ant2.x).get(ant2.y).remove(ant2);
+                    board.trimToSize();
+                    ant2 = null;
+                } else {
+                    sim.anthill1.delete_ant(ant1);
+                    board.get(ant1.x).get(ant1.y).remove(ant1);
+                    board.trimToSize();
+                    ant1 = null;
+                }
+
+            } else {
+                do {
+                    one = rand.nextInt(0, sim.anthill2.ant_count());
+                    second = rand.nextInt(0, sim.anthill1.ant_count());
+                } while (one == second);
+                if (one > second) {
+                    sim.anthill1.delete_ant(ant2);
+                    board.get(ant2.x).get(ant2.y).remove(ant2);
+                    board.trimToSize();
+                    ant2 = null;
+                } else {
+                    sim.anthill2.delete_ant(ant1);
+                    board.get(ant1.x).get(ant1.y).remove(ant1);
+                    board.trimToSize();
+                    ant1 = null;
+                }
+            }
+        }
+        if ((ant1 != null || ant2 != null)) {
+            if (ant1 != null)
+                ant_temp = ant1;
+            else
+                ant_temp = ant2;
+            if (food != null) {
+                if (ant_temp != null) {
+                    id = ant_temp.anthill_id;
+                    if (id == 1) {
+                        switch (food.quality) {
+                            case LOW:
+                                sim.anthill1.generate_ant();
+                                set_Board_object(sim.anthill1.get_ant(sim.anthill1.ant_count() - 1), sim.anthill1.x, sim.anthill1.y);
+                                break;
+                            case MEDIUM: {
+                                for (int i = 0; i < 2; i++) {
+                                    sim.anthill1.generate_ant();
+                                    set_Board_object(sim.anthill1.get_ant(sim.anthill1.ant_count() - 1), sim.anthill1.x, sim.anthill1.y);
+
+                                }
+                                break;
+                            }
+                            case HIGH: {
+                                sim.anthill1.generate_f_ant();
+                                set_Board_object(sim.anthill1.get_ant(sim.anthill1.ant_count() - 1), sim.anthill1.x, sim.anthill1.y);
+                                break;
+                            }
+
+                        }
+                    }
+                    if (id == 2) {
+                        switch (food.quality) {
+                            case LOW:
+                                sim.anthill2.generate_ant();
+                                set_Board_object(sim.anthill2.get_ant(sim.anthill2.ant_count() - 1), sim.anthill2.x, sim.anthill2.y);
+                                break;
+                            case MEDIUM: {
+                                for (int i = 0; i < 2; i++) {
+                                    sim.anthill2.generate_ant();
+                                    set_Board_object(sim.anthill2.get_ant(sim.anthill2.ant_count() - 1), sim.anthill2.x, sim.anthill2.y);
+
+                                }
+                                break;
+                            }
+                            case HIGH: {
+                                sim.anthill2.generate_f_ant();
+                                set_Board_object(sim.anthill2.get_ant(sim.anthill2.ant_count() - 1), sim.anthill2.x, sim.anthill2.y);
+                                break;
+                            }
+                        }
+
+                    }
+                    board.get(food.position().x).get(food.position().y).remove(food);
+                    Food food_one=new Food(Quality_Of_Food.HIGH,size);
+                    set_Board_object(food_one,food_one.x,food_one.y);
+                }
+                //System.out.println("Kolizja mrowek");
+
+            }
+        }
+        if(ant_eater!=null)
+        {
+            if(ant1!=null||ant2!=null)
+            {
+                if(ant1!=null)
                 {
-                    if(list.get(i) instanceof  Ant)
+                    ant_temp=ant1;
+
+                }
+                if(ant2!=null)
+                {
+                    ant_temp=ant2;
+                }
+                if(ant_temp.anthill_id==1) {
+                    do {
+                        one = rand.nextInt(0, sim.anthill1.ant_count());
+                        second = rand.nextInt(0, sim.base_ant_count * 5);
+
+                    }
+                    while (one == second);
+                    if(one>second)
                     {
-                        if(((Ant) list.get(i)).anthill_id!=ant1.anthill_id)
+                        board.get(ant_eater.x).get(ant_eater.y).remove(ant_eater);
+                        board.trimToSize();
+                        for(int i=0;i<3;i++)
                         {
-                            ant2=(Ant)list.get(i);
+                            sim.anthill1.generate_ant();
+                            set_Board_object(sim.anthill1.get_ant(sim.anthill1.ant_count()-1),sim.anthill1.x,sim.anthill1.y);
+                        }
+                    }
+                    else
+                    {
+                        board.get(ant_temp.x).get(ant_temp.y).remove(ant_temp);
+                        board.trimToSize();
+                    }
+                }
+                if(ant_temp.anthill_id==2)
+                {
+                    {
+                        do {
+                            one = rand.nextInt(0, sim.anthill2.ant_count());
+                            second = rand.nextInt(0, sim.base_ant_count * 5);
+
+                        }
+                        while (one == second);
+                        if(one>second)
+                        {
+                            board.get(ant_eater.x).get(ant_eater.y).remove(ant_eater);
+                            board.trimToSize();
+                            for(int i=0;i<3;i++)
+                            {
+                                sim.anthill2.generate_ant();
+                                set_Board_object(sim.anthill2.get_ant(sim.anthill2.ant_count()-1),sim.anthill1.x,sim.anthill1.y);
+                            }
+                        }
+                        else
+                        {
+                            board.get(ant_temp.x).get(ant_temp.y).remove(ant_temp);
+                            board.trimToSize();
                         }
                     }
                 }
             }
 
         }
-        if(ant1==null||ant2==null)
-            return;
-        if(sim.anthill1.id_anthill==ant1.anthill_id)
-        {
-            do {
-                one = rand.nextInt(0, sim.anthill1.ant_count());
-                second = rand.nextInt(0, sim.anthill2.ant_count());
-            }while(one==second);
-            if(one>second)
-            {
-                sim.anthill2.delete_ant(ant2);
-                board.get(ant2.x).get(ant2.y).remove(ant2);
-                board.trimToSize();
-            }
-            else
-            {
-                sim.anthill1.delete_ant(ant1);
-                board.get(ant1.x).get(ant1.y).remove(ant1);
-                board.trimToSize();
-            }
-
-        }
-        else
-        {
-            do {
-                one = rand.nextInt(0, sim.anthill2.ant_count());
-                second = rand.nextInt(0, sim.anthill1.ant_count());
-            }while(one==second);
-            if(one>second)
-            {
-                sim.anthill1.delete_ant(ant2);
-                board.get(ant2.x).get(ant2.y).remove(ant2);
-                board.trimToSize();
-            }
-            else
-            {
-                sim.anthill2.delete_ant(ant1);
-                board.get(ant1.x).get(ant1.y).remove(ant1);
-                board.trimToSize();
-            }
-        }
-        System.out.println("Kolizja mrowek");
-
     }
 
-    public ArrayList<Object> ant_food_collision(ArrayList<Board_object> list){        //kolizja mrowki/mrowki latajacej i jedzenia
 
-        Ant ant = null;
-        Food food = null;
-        Flying_ant f_ant = null;
-
-        ArrayList<Object> tlist = new ArrayList<>(2);
-        for(Board_object object: list){
-            if(object != null) {
-                if(object instanceof Flying_ant) f_ant = (Flying_ant)object;
-                else if(object instanceof Ant) ant = (Ant)object;
-                else if(object instanceof Food) food = (Food)object;
-            }
-        }
-
-        if((ant!=null || f_ant!=null) && food!=null){
-            if(f_ant!=null) tlist.add(0,f_ant.anthill_id);
-            else tlist.add(0,ant.anthill_id);
-            tlist.add(1,food.quality);
-
-            board.get(food.position().x).get(food.position().y).remove(food);
-            Food food_one = new Food(Quality_Of_Food.HIGH, size);
-            set_Board_object(food_one, food_one.x, food_one.y);
-
-            System.out.println("Ant eats food, anthillid: " + tlist.get(0)+ ", quality: " + food.quality + "\n");      //sprawdzanie czy dziala, mozna potem usunac
-
-            return tlist;
-        }
-        return null;
-    }
 
     @Override
     public void paint(Graphics g) {
@@ -300,6 +362,7 @@ public class Board extends JPanel {
         Ant ant;
         Food food;
         Flying_ant f_ant;
+        Ant_eater ant_eater;
 
         for(int i=0;i<board.size();i++)
         {
@@ -325,6 +388,10 @@ public class Board extends JPanel {
                                     f_ant = (Flying_ant)board.get(i).get(j).get(k);
                                     f_ant.paint_on_board(g);
                                 }
+                                if(board.get(i).get(j).get(k) instanceof Ant_eater){
+                                    ant_eater=(Ant_eater) board.get(i).get(j).get(k);
+                                    ant_eater.paint_on_board(g);
+                                }
                             }
 
                         }
@@ -335,4 +402,6 @@ public class Board extends JPanel {
         }
 
     }
+
+
 }
