@@ -18,6 +18,7 @@ public class Anthill implements Board_object {
 
     int x, y, x_max, y_max;
 
+    ArrayList<Integer> history = new ArrayList<Integer>();
     public Anthill(boolean is_main, byte id_anthill, int ant_number, int x, int y,int x_max,int y_max) {
         this.is_main = is_main;
         this.id_anthill = id_anthill;
@@ -76,6 +77,8 @@ public class Anthill implements Board_object {
     public String item_on() {
         return "Anthill" + id_anthill;
     }
+
+
 
 
     @Override

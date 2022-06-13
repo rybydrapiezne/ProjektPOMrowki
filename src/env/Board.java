@@ -16,6 +16,8 @@ public class Board extends JPanel {
     Anthill anthill_red;
     Anthill anthill_blue;
 
+    ArrayList<Point> points;
+
     Board(int size)
     {
         this.size=size;
@@ -30,7 +32,7 @@ public class Board extends JPanel {
             }
 
         JFrame frame = new JFrame("Ants Simulation");
-        frame.setSize(size*20,size*20);
+        frame.setSize(size*27,size*22);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         frame.setVisible(true);
@@ -93,6 +95,10 @@ public class Board extends JPanel {
 
             }
         }
+
+        System.out.println("1: " + anthill_red.ant_count() + " 2: " + anthill_blue.ant_count());
+        anthill_red.history.add(anthill_red.ant_count());
+        anthill_blue.history.add(anthill_blue.ant_count());
 
 
 
@@ -162,10 +168,10 @@ public class Board extends JPanel {
                         ant1 = (Ant) list.get(i);
                         continue;
                     }
-                    if (list.get(i) instanceof Flying_ant) {
-                        ant1 = (Flying_ant) list.get(i);
-                        continue;
-                    }
+//                    if (list.get(i) instanceof Flying_ant) {
+//                        ant1 = (Flying_ant) list.get(i);
+//                        continue;
+//                    }
                 }
                 if (ant2 == null) {
                     if (list.get(i) instanceof Ant) {
@@ -174,11 +180,11 @@ public class Board extends JPanel {
                             continue;
                         }
                     }
-                    if (list.get(i) instanceof Flying_ant) {
-                        if (((Ant) list.get(i)).anthill_id != ant1.anthill_id) {
-                            ant2 = (Flying_ant) list.get(i);
-                        }
-                    }
+//                    if (list.get(i) instanceof Flying_ant) {
+//                        if (((Ant) list.get(i)).anthill_id != ant1.anthill_id) {
+//                            ant2 = (Flying_ant) list.get(i);
+//                        }
+//                    }
                 }
                 if (list.get(i) instanceof Food) {
                     food = (Food) list.get(i);
@@ -192,8 +198,8 @@ public class Board extends JPanel {
         if (ant1 != null && ant2 != null) {
             if (sim.anthill1.id_anthill == ant1.anthill_id) {
                 do {
-                    one = rand.nextInt(0, sim.anthill1.ant_count());
-                    second = rand.nextInt(0, sim.anthill2.ant_count());
+                    one = rand.nextInt(0, ant1.getHealth()*sim.anthill1.ant_count());
+                    second = rand.nextInt(0, ant2.getHealth()*sim.anthill2.ant_count());
                 } while (one == second);
                 if (one > second) {
                     sim.anthill2.delete_ant(ant2);
@@ -209,8 +215,8 @@ public class Board extends JPanel {
 
             } else {
                 do {
-                    one = rand.nextInt(0, sim.anthill2.ant_count());
-                    second = rand.nextInt(0, sim.anthill1.ant_count());
+                    one = rand.nextInt(0, ant1.getHealth()*sim.anthill2.ant_count());
+                    second = rand.nextInt(0, ant2.getHealth()*sim.anthill1.ant_count());
                 } while (one == second);
                 if (one > second) {
                     sim.anthill1.delete_ant(ant2);
@@ -300,7 +306,7 @@ public class Board extends JPanel {
                 }
                 if(ant_temp.anthill_id==1) {
                     do {
-                        one = rand.nextInt(0, sim.anthill1.ant_count());
+                        one = rand.nextInt(0, ant_temp.getHealth()*sim.anthill1.ant_count());
                         second = rand.nextInt(0, sim.base_ant_count * 5);
 
                     }
@@ -318,6 +324,7 @@ public class Board extends JPanel {
                     else
                     {
                         board.get(ant_temp.x).get(ant_temp.y).remove(ant_temp);
+                        sim.anthill1.delete_ant(ant1);
                         board.trimToSize();
                     }
                 }
@@ -325,7 +332,7 @@ public class Board extends JPanel {
                 {
                     {
                         do {
-                            one = rand.nextInt(0, sim.anthill2.ant_count());
+                            one = rand.nextInt(0, ant_temp.getHealth()*sim.anthill2.ant_count());
                             second = rand.nextInt(0, sim.base_ant_count * 5);
 
                         }
@@ -343,6 +350,7 @@ public class Board extends JPanel {
                         else
                         {
                             board.get(ant_temp.x).get(ant_temp.y).remove(ant_temp);
+                            sim.anthill2.delete_ant(ant1);
                             board.trimToSize();
                         }
                     }
@@ -364,32 +372,31 @@ public class Board extends JPanel {
         Flying_ant f_ant;
         Ant_eater ant_eater;
 
-        for(int i=0;i<board.size();i++)
-        {
-            if(board.get(i)!=null) {
+
+        for (int i = 0; i < board.size(); i++) {
+            if (board.get(i) != null) {
                 for (int j = 0; j < board.get(i).size(); j++) {
                     if (board.get(i).get(j) != null) {
                         for (int k = 0; k < board.get(i).get(j).size(); k++) {
-                            if (board.get(i).get(j).get(k) != null)
-                            {
-                                if(board.get(i).get(j).get(k) instanceof Anthill){
-                                    anthill = (Anthill)board.get(i).get(j).get(k);
+                            if (board.get(i).get(j).get(k) != null) {
+                                if (board.get(i).get(j).get(k) instanceof Anthill) {
+                                    anthill = (Anthill) board.get(i).get(j).get(k);
                                     anthill.paint_on_board(g);
                                 }
-                                if (board.get(i).get(j).get(k) instanceof Ant){
-                                    ant = (Ant)board.get(i).get(j).get(k);
-                                    ant.paint_on_board(g);
-                                }
-                                if(board.get(i).get(j).get(k) instanceof Food){
-                                    food = (Food)board.get(i).get(j).get(k);
-                                    food.paint_on_board(g);
-                                }
-                                if(board.get(i).get(j).get(k) instanceof Flying_ant) {
-                                    f_ant = (Flying_ant)board.get(i).get(j).get(k);
+                                else if (board.get(i).get(j).get(k) instanceof Flying_ant) {
+                                    f_ant = (Flying_ant) board.get(i).get(j).get(k);
                                     f_ant.paint_on_board(g);
                                 }
-                                if(board.get(i).get(j).get(k) instanceof Ant_eater){
-                                    ant_eater=(Ant_eater) board.get(i).get(j).get(k);
+                                else if (board.get(i).get(j).get(k) instanceof Ant) {
+                                    ant = (Ant) board.get(i).get(j).get(k);
+                                    ant.paint_on_board(g);
+                                }
+                                else if (board.get(i).get(j).get(k) instanceof Food) {
+                                    food = (Food) board.get(i).get(j).get(k);
+                                    food.paint_on_board(g);
+                                }
+                                else if (board.get(i).get(j).get(k) instanceof Ant_eater) {
+                                    ant_eater = (Ant_eater) board.get(i).get(j).get(k);
                                     ant_eater.paint_on_board(g);
                                 }
                             }
@@ -400,8 +407,5 @@ public class Board extends JPanel {
 
             }
         }
-
     }
-
-
 }

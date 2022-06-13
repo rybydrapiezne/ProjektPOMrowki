@@ -12,6 +12,7 @@ import java.util.Random;
 import  javax.swing.SwingWorker;
 public class Simulation extends JPanel implements ActionListener {
     private Board simulation_board;
+    public JPanelStatistics stats;
     Anthill anthill1;
     int number_of_ant_eaters;
     int base_ant_count;
@@ -30,6 +31,9 @@ public class Simulation extends JPanel implements ActionListener {
         anthill2=new Anthill(true,(byte)2,base_ant_count, simulation_board.size-1, simulation_board.size-1,simulation_board.size-1,simulation_board.size-1);
         simulation_board.set_Board_object(anthill1, anthill1.x, anthill1.y); //ustawienie obu mrowisk na planszy
         simulation_board.set_Board_object(anthill2, anthill2.x, anthill2.y);
+
+        simulation_board.anthill_red = anthill1;
+        simulation_board.anthill_blue = anthill2;
 
         Random rand=new Random();
         for(int i=0;i<number_of_ant_eaters;i++)
@@ -52,6 +56,8 @@ public class Simulation extends JPanel implements ActionListener {
             simulation_board.set_Board_object(food_object, food_object.x, food_object.y);
         }
 
+
+      stats = new JPanelStatistics(this);
         animationtimer = new Timer(100, this);
         animationtimer.start();
     }
@@ -59,7 +65,11 @@ public class Simulation extends JPanel implements ActionListener {
     public static void main(String [] args)
     {
         Simulation sup_sim=new Simulation();
-      //  sup_sim.simulation_board.draw_board();
+
+        JFrame graph = new JFrame("Graph");
+        graph.setSize(300,400);
+        graph.setVisible(true);
+        graph.add(sup_sim.stats);
 
     }
 

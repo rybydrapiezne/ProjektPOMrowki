@@ -57,6 +57,8 @@ abstract class Agent  implements Board_object{
         return null;
     }
 
+    public int getHealth(){ return health;}
+
     @Override
     public void paint_on_board(Graphics p){}
 }

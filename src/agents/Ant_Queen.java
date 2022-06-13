@@ -1,5 +1,5 @@
 package agents;
-
+import java.awt.*;
 
 public class Ant_Queen extends Ant {
     Ant_Queen(int x,int y,int range,int health,int x_move_range,int y_move_range, byte anthill_id)
@@ -11,9 +11,4 @@ public class Ant_Queen extends Ant {
         super.do_smth();
     }
 
-
-    public void create_anthill()
-    {
-
-    }
 }
