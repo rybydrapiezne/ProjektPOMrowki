@@ -12,8 +12,16 @@ public class Ant extends Agent  {
     }
 
     @Override
-    public void do_smth() {
-        super.do_smth();
+    public void do_smth(int x,int y) {
+        if(x==-1&&y==-1)
+        super.do_smth(x,y);
+        else
+        {
+            if(x<x_move_range||y<x_move_range) {
+                this.x = x;
+                this.y = y;
+            }
+        }
     }
 
 

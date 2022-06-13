@@ -28,7 +28,7 @@ public class Food implements Board_object  {
         iteration=0;
     }
     @Override
-    public void do_smth() {
+    public void do_smth(int x,int y) {
         iteration++;
         switch (iteration)
         {

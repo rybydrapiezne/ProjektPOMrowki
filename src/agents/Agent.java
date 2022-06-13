@@ -5,15 +5,14 @@ import env.Board_object;
 import java.awt.*;
 import java.util.Random;
 
-abstract class Agent  implements Board_object{
+public abstract class Agent  implements Board_object{
     public int x;
-
+    static Random rand=new Random();
     public int y;
     int vector;
-    private int range;
+    final int range;
     private
     int health;
-    Random rand;
     int x_move_range;
     int y_move_range;
     Agent(int x,int y,int range,int health,int x_move_range,int y_move_range)
@@ -22,25 +21,28 @@ abstract class Agent  implements Board_object{
         this.y=y;
         this.range=range;
         this.health=health;
-        rand=new Random();
         this.x_move_range=x_move_range;
         this.y_move_range=y_move_range;
     }
-    public void do_smth()
+    @Override
+    public void do_smth(int x,int y)
     {
         int x_temp;
         int y_temp;
         do {
             x_temp=rand.nextInt(-range,range+1);
             y_temp=rand.nextInt(-range,range+1);
-        }while((x+x_temp>x_move_range||x+x_temp<0||y+y_temp>y_move_range||y+y_temp<0)||(x_temp==0||y_temp==0));
-        x+=x_temp;
-        y+=y_temp;
+        }while((this.x+x_temp>x_move_range||this.x+x_temp<0||this.y+y_temp>y_move_range||this.y+y_temp<0)||(x_temp==0&&y_temp==0));
+        this.x+=x_temp;
+        this.y+=y_temp;
         //System.out.println(x);
         //System.out.println(y);
     }
 
-
+    public void PrintAgent()
+    {
+        System.out.println("x="+x+" y="+y);
+    }
     @Override
     public int get_range() {
         return range;

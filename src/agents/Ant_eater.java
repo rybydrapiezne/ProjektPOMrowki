@@ -10,8 +10,8 @@ public class Ant_eater extends Agent {
     }
 
     @Override
-    public void do_smth() {
-        super.do_smth();
+    public void do_smth(int x,int y) {
+        super.do_smth(x,y);
     }
     public String item_on() {//jak juz pisalem wczesniej tylko robocza metoda do mozliwosci wyswietlenia planszy w trybie tekstowym
         String k;
