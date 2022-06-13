@@ -11,8 +11,6 @@ import java.util.Random;
 public class Board extends JPanel {
     ArrayList<ArrayList<ArrayList<Board_object>>> board;
     int size;
-    Anthill anthill_red;
-    Anthill anthill_blue;
 
     ArrayList<Point> points;
 
@@ -114,9 +112,6 @@ public class Board extends JPanel {
             }
         }
 
-        System.out.println("1: " + anthill_red.ant_count() + " 2: " + anthill_blue.ant_count());
-        anthill_red.history.add(anthill_red.ant_count());
-        anthill_blue.history.add(anthill_blue.ant_count());
 
 
 
