@@ -14,10 +14,6 @@ public class Ant_Queen extends Ant {
     }
 
 
-    public void create_anthill()
-    {
-
-    }
 
     @Override
     public void paint_on_board(Graphics p) {

@@ -13,12 +13,7 @@ public class Ant_eater extends Agent {
     public void do_smth(int x,int y) {
         super.do_smth(x,y);
     }
-    public String item_on() {//jak juz pisalem wczesniej tylko robocza metoda do mozliwosci wyswietlenia planszy w trybie tekstowym
-        String k;
-        k="Anteater ";
 
-        return k;
-    }
     public void paint_on_board( Graphics p){
          p.setColor(Color.MAGENTA);
         p.fillOval(x*20,y*20,20,20);

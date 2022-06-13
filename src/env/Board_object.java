@@ -5,11 +5,11 @@ import java.awt.*;
 public interface Board_object {
 
 
-   void do_smth(int x,int y);
+   void do_smth(int x,int y);//metoda pozwalająca na wykonanie np ruchu dla mrówki czy zestarzenia się jedzenia
 
    int get_range();
    Point position();
-   String item_on();//metoda sluzaca do wyswietlania w pozniejszych etapach jej nie bedzie
+
 
 
    void paint_on_board(Graphics p);

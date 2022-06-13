@@ -7,23 +7,28 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 import  javax.swing.SwingWorker;
 public class Simulation extends JPanel implements ActionListener {
     private Board simulation_board;
+
+
     public JPanelStatistics stats;
     Anthill anthill1;
-    int number_of_ant_eaters;
-    int base_ant_count;
     Anthill anthill2;
-    Ant_eater ant_eater;
-    int base_food_cout;
+
+    final int number_of_ant_eaters;//bazowa ilosc mrówkojadów
+    int base_ant_count;//bazowa ilosc mrówek pojawiajacych się na poczatku
+    final int base_food_cout;//bazowa ilosc jedzenia na planszy
     Timer animationtimer;
 
     Simulation() {
 
-
+        Ant_eater ant_eater;
         int anteater_x;
         int anteater_y;
         simulation_board = new Board(25);
@@ -52,9 +57,7 @@ public class Simulation extends JPanel implements ActionListener {
             simulation_board.set_Board_object(anthill2.get_ant(i), anthill2.get_ant(i).position().x, anthill2.get_ant(i).position().y);
 
         }
-        System.out.println("k1 "+anthill1.ant_count());
-        System.out.println("k2 "+anthill2.ant_count());
-        System.out.println("k3 "+simulation_board.count_ants_on_board());
+
 
         for (int i = 0; i < base_food_cout; i++) {
             Food food_object = new Food(Quality_Of_Food.HIGH, simulation_board.size);
@@ -85,7 +88,8 @@ public class Simulation extends JPanel implements ActionListener {
         if((anthill1.has_queen_appeared&&anthill1.ant_count()==0)||(anthill2.has_queen_appeared&&anthill2.ant_count()==0))
         {
             System.out.println("Koniec!");
-            return;
+
+
         }
         else {
 
@@ -93,7 +97,9 @@ public class Simulation extends JPanel implements ActionListener {
             simulation_board.repaint();
         }
 
+
 //        System.out.println(anthill1.ant_count());
 //        System.out.println(anthill2.ant_count());
     }
+
 }

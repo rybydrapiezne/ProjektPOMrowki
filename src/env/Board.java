@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class Board extends JPanel {
     ArrayList<ArrayList<ArrayList<Board_object>>> board;
-    int size;
+   final int size;
 
     Anthill anthill_red;
     Anthill anthill_blue;
@@ -37,7 +37,7 @@ public class Board extends JPanel {
         frame.add(this);
 
     }
-    void draw_board()
+    /*void draw_board()
     {
         //wyswietlanie tekstowe planszy
         System.out.println("Board");
@@ -49,7 +49,7 @@ public class Board extends JPanel {
                             if (arrayLists.get(j).get(k) != null)
                                 if(arrayLists.get(j).get(k)  instanceof Agent) {
                                     System.out.print(arrayLists.get(j).get(k) + " " );
-                                    ((Agent)(arrayLists.get(j).get(k))).PrintAgent();
+
                                 }
                           //  else
                           //      System.out.print(0);
@@ -60,7 +60,7 @@ public class Board extends JPanel {
             }
         }
         System.out.println("ENDBOARD");
-    }
+    }*/
     public void proceed(Simulation sim)
     {
         int x_temp=-1;
@@ -114,7 +114,7 @@ public class Board extends JPanel {
             }
         }
 
-        System.out.println("1: " + anthill_red.ant_count() + " 2: " + anthill_blue.ant_count());
+
         anthill_red.history.add(anthill_red.ant_count());
         anthill_blue.history.add(anthill_blue.ant_count());
 
@@ -148,11 +148,8 @@ public class Board extends JPanel {
         if(board.get(x).get(y).contains(null))
             board.get(x).get(y).clear();
         board.get(x).get(y).add(thing);
-        if(!board.get(x).get(y).contains(thing))
-        {
-            System.out.println();
-        }
-        System.out.println("T "+thing);
+
+
 
     }
     public void move_Board_object(Board_object thing,Point old_position)
@@ -203,10 +200,7 @@ public class Board extends JPanel {
                         ant1 = (Ant) list.get(i);
                         continue;
                     }
-//                    if (list.get(i) instanceof Flying_ant) {
-//                        ant1 = (Flying_ant) list.get(i);
-//                        continue;
-//                    }
+
                 }
                 if (ant2 == null) {
                     if (list.get(i) instanceof Ant) {
@@ -215,11 +209,7 @@ public class Board extends JPanel {
                             continue;
                         }
                     }
-//                    if (list.get(i) instanceof Flying_ant) {
-//                        if (((Ant) list.get(i)).anthill_id != ant1.anthill_id) {
-//                            ant2 = (Flying_ant) list.get(i);
-//                        }
-//                    }
+
                 }
                 if (list.get(i) instanceof Food) {
                     food = (Food) list.get(i);
@@ -230,7 +220,7 @@ public class Board extends JPanel {
             }
 
         }
-        if (ant1 != null && ant2 != null) {
+        if (ant1 != null && ant2 != null) {//walka mrówek
             if (sim.anthill1.id_anthill == ant1.anthill_id) {
                 do {
                     one = rand.nextInt(0, ant1.getHealth()*sim.anthill1.ant_count());
@@ -268,7 +258,8 @@ public class Board extends JPanel {
         }
 
 
-        if ((ant1 != null || ant2 != null||ant_queen1!=null||ant_queen2!=null)) {
+        if ((ant1 != null || ant2 != null||ant_queen1!=null||ant_queen2!=null)) //mrowka wchodzi na pole z jedzeniem
+            {
             if (ant1 != null)
                 ant_temp = ant1;
             else
@@ -329,15 +320,8 @@ public class Board extends JPanel {
 
 
                     }
-                    if(sim.anthill2.ant_count()+sim.anthill1.ant_count()!=count_ants_on_board()) {
-                        draw_board();
-                        System.out.println();
-                        sim.anthill1.printAnts();
-                        System.out.println();
-                        sim.anthill2.printAnts();
-                        System.out.println();
-                    }
-                    if(ant_queen1!=null)
+
+                    if(ant_queen1!=null)//w przypadku gdy mrowisko nie istnieje pojawia sie królowa
                     {
                         sim.anthill1.create_anthill(ant_queen1.x, ant_queen1.y);
                         set_Board_object(sim.anthill1,sim.anthill1.x,sim.anthill1.y);
@@ -366,11 +350,11 @@ public class Board extends JPanel {
                     get_rid(sim.anthill1);
                     get_rid(sim.anthill2);
                 }
-                //System.out.println("Kolizja mrowek");
+
 
             }
         }
-        if(ant_eater!=null)
+        if(ant_eater!=null)//mrówka walczy z mrówkojadem
         {
             if(ant1!=null||ant2!=null)
             {
@@ -441,15 +425,15 @@ public class Board extends JPanel {
         }
     }
 
-    public void release_queen(Simulation sim)
+    public void release_queen(Simulation sim)//metoda sluzaca do wypuszczenia królowej z mrowiska i usunięcia mrowiska z planszy
     {
         Anthill anthill_temp=null;
         if(sim.anthill1.ant_count()==0) {
-           System.out.println("1");
+
             anthill_temp = sim.anthill1;
         }
         if(sim.anthill2.ant_count()==0) {
-            System.out.println("2");
+
             anthill_temp = sim.anthill2;
         }
         if(anthill_temp==null)
@@ -463,33 +447,9 @@ public class Board extends JPanel {
         }
 
     }
-    int count_ants_on_board()
-    {
-        int costam=0;
-        for(int i=0;i<board.size();i++)
-        {
-            if(board.get(i)!=null)
-            {
-                for(int j=0;j<board.get(i).size();j++)
-                {
-                    if(board.get(i).get(j)!=null)
-                    {
-                        for(int k=0;k<board.get(i).get(j).size();k++)
-                        {
-                            if(board.get(i).get(j).get(k)!=null)
-                            {
-                                if(board.get(i).get(j).get(k) instanceof Ant || board.get(i).get(j).get(k) instanceof Flying_ant)
-                                    costam++;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return costam;
-    }
 
-    private void get_rid(Anthill anthill)
+
+    private void get_rid(Anthill anthill)//metoda naprawiająca pewnego buga w kodzie
     {
         boolean flag=false;
         for(int i=0;i<anthill.ant_count();i++)
