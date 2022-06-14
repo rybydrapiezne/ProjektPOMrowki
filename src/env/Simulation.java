@@ -40,8 +40,9 @@ public class Simulation extends JPanel implements ActionListener {
         simulation_board.set_Board_object(anthill1, anthill1.x, anthill1.y); //ustawienie obu mrowisk na planszy
         simulation_board.set_Board_object(anthill2, anthill2.x, anthill2.y);
 
-        simulation_board.anthill_red = anthill1;
-        simulation_board.anthill_blue = anthill2;
+
+        simulation_board.anthill_blue = anthill1;
+        simulation_board.anthill_red = anthill2;
         Random rand = new Random();
         for (int i = 0; i < number_of_ant_eaters; i++) {
             do {
@@ -75,9 +76,23 @@ public class Simulation extends JPanel implements ActionListener {
 
         Simulation sup_sim=new Simulation();
         JFrame graph = new JFrame("Graph");
+
+//        GridLayout layout = new GridLayout(1, 2);
+//        graph.setLayout(layout);
+//
+//        graph.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//        graph.setResizable(false);
+//        graph.pack();
+//        graph.setVisible(true);
+
         graph.setSize(300,400);
+        graph.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        graph.setLocation(dim.width/2-graph.getSize().width/2, dim.height/2-graph.getSize().height/2);
         graph.setVisible(true);
         graph.add(sup_sim.stats);
+        //graph.add(sup_sim.simulation_board);
+
 
     }
 
@@ -89,7 +104,10 @@ public class Simulation extends JPanel implements ActionListener {
         {
             System.out.println("Koniec!");
 
+            animationtimer.stop();
 
+            JPanelEnding theend = new JPanelEnding(this, simulation_board);
+            animationtimer.stop();
         }
         else {
 

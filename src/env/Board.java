@@ -30,8 +30,10 @@ public class Board extends JPanel {
             }
 
         JFrame frame = new JFrame("Ants Simulation");
-        frame.setSize(size*27,size*22);
+        frame.setSize(size*21,size*22);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
 
         frame.setVisible(true);
         frame.add(this);
@@ -497,7 +499,7 @@ public class Board extends JPanel {
                                     anthill = (Anthill) board.get(i).get(j).get(k);
                                     anthill.paint_on_board(g);
                                     if(anthill.id_anthill==1)
-                                    g.drawString(Integer.toString(anthill.ant_count()),300,300);
+                                        g.drawString(Integer.toString(anthill.ant_count()),300,300);
                                     if(anthill.id_anthill==2)
                                         g.drawString(Integer.toString(anthill.ant_count()),300,250);
 
