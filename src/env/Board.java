@@ -33,7 +33,8 @@ public class Board extends JPanel {
         frame.setSize(size*21,size*22);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
+        //frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
+        frame.setLocation(dim.width/2, dim.height/2-frame.getSize().height/2);
 
         frame.setVisible(true);
         frame.add(this);

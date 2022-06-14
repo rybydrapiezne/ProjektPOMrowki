@@ -85,10 +85,10 @@ public class Simulation extends JPanel implements ActionListener {
 //        graph.pack();
 //        graph.setVisible(true);
 
-        graph.setSize(300,400);
         graph.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        graph.setLocation(dim.width/2-graph.getSize().width/2, dim.height/2-graph.getSize().height/2);
+        graph.setSize(dim.width/2, dim.height-50);
+        //graph.setLocation(dim.width/2-graph.getSize().width/2, dim.height/2-graph.getSize().height/2);
         graph.setVisible(true);
         graph.add(sup_sim.stats);
         //graph.add(sup_sim.simulation_board);
@@ -105,9 +105,7 @@ public class Simulation extends JPanel implements ActionListener {
             System.out.println("Koniec!");
 
             animationtimer.stop();
-
             JPanelEnding theend = new JPanelEnding(this, simulation_board);
-            animationtimer.stop();
         }
         else {
 
