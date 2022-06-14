@@ -10,8 +10,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 import  javax.swing.SwingWorker;
 public class Simulation extends JPanel implements ActionListener {
     private Board simulation_board;
@@ -20,21 +23,25 @@ public class Simulation extends JPanel implements ActionListener {
     public JPanelStatistics stats;
     Anthill anthill1;
     Anthill anthill2;
-
+    int size;
     final int number_of_ant_eaters;//bazowa ilosc mrówkojadów
     int base_ant_count;//bazowa ilosc mrówek pojawiajacych się na poczatku
     final int base_food_cout;//bazowa ilosc jedzenia na planszy
     Timer animationtimer;
+    private File file=new File("scenario_2.txt");
+    private Scanner scanner;
 
-    Simulation() {
+    Simulation() throws FileNotFoundException {
 
         Ant_eater ant_eater;
         int anteater_x;
         int anteater_y;
-        simulation_board = new Board(25);
-        number_of_ant_eaters = 5;
-        base_ant_count = 10;
-        base_food_cout=7;
+        scanner=new Scanner(file);
+        size=scanner.nextInt();
+        simulation_board = new Board(size);
+        base_ant_count = scanner.nextInt();
+        base_food_cout=scanner.nextInt();
+        number_of_ant_eaters = scanner.nextInt();
         anthill1 = new Anthill(true, (byte) 1, base_ant_count, 0, 0, simulation_board.size - 1, simulation_board.size - 1);
         anthill2 = new Anthill(true, (byte) 2, base_ant_count, simulation_board.size - 1, simulation_board.size - 1, simulation_board.size - 1, simulation_board.size - 1);
         simulation_board.set_Board_object(anthill1, anthill1.x, anthill1.y); //ustawienie obu mrowisk na planszy
@@ -70,8 +77,7 @@ public class Simulation extends JPanel implements ActionListener {
         animationtimer.start();
     }
 
-    public static void main(String [] args)
-    {
+    public static void main(String [] args) throws FileNotFoundException {
 
 
         Simulation sup_sim=new Simulation();
@@ -85,10 +91,10 @@ public class Simulation extends JPanel implements ActionListener {
 //        graph.pack();
 //        graph.setVisible(true);
 
+        graph.setSize(300,400);
         graph.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        graph.setSize(dim.width/2, dim.height-50);
-        //graph.setLocation(dim.width/2-graph.getSize().width/2, dim.height/2-graph.getSize().height/2);
+        graph.setLocation(dim.width/2-graph.getSize().width/2, dim.height/2-graph.getSize().height/2);
         graph.setVisible(true);
         graph.add(sup_sim.stats);
         //graph.add(sup_sim.simulation_board);
@@ -105,7 +111,26 @@ public class Simulation extends JPanel implements ActionListener {
             System.out.println("Koniec!");
 
             animationtimer.stop();
+
             JPanelEnding theend = new JPanelEnding(this, simulation_board);
+            animationtimer.stop();
+            file=new File("Results.txt");
+            try {
+                PrintWriter printWriter=new PrintWriter(file);
+                printWriter.println("Board size= "+size);
+                printWriter.println("Number of ants at the beginning= "+number_of_ant_eaters);
+                printWriter.println("Number of food at board= "+base_food_cout);
+                printWriter.println("Number of ant eaters= "+number_of_ant_eaters);
+                printWriter.println();
+                if(anthill1.ant_number>0)
+                printWriter.println("Number of ants in winning anthill1= "+anthill1.ant_count());
+                else
+                    printWriter.println("Number of ants in winning anthill2= "+anthill2.ant_count());
+                printWriter.close();
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+
         }
         else {
 

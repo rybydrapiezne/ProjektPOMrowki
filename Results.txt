@@ -1,0 +1,6 @@
+Board size= 25
+Number of ants at the beginning= 10
+Number of food at board= 4
+Number of ant eaters= 10
+
+Number of ants in winning anthill1= 0

@@ -499,10 +499,7 @@ public class Board extends JPanel {
                                 if (board.get(i).get(j).get(k) instanceof Anthill) {
                                     anthill = (Anthill) board.get(i).get(j).get(k);
                                     anthill.paint_on_board(g);
-                                    if(anthill.id_anthill==1)
-                                        g.drawString(Integer.toString(anthill.ant_count()),300,300);
-                                    if(anthill.id_anthill==2)
-                                        g.drawString(Integer.toString(anthill.ant_count()),300,250);
+
 
                                 }
                                 else if (board.get(i).get(j).get(k) instanceof Flying_ant) {
