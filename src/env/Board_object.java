@@ -9,8 +9,4 @@ public interface Board_object {
 
    int get_range();
    Point position();
-
-
-
-   void paint_on_board(Graphics p);
 }

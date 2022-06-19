@@ -2,17 +2,22 @@ package env;
 
 import agents.*;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Board extends JPanel {
+public class Board{
     ArrayList<ArrayList<ArrayList<Board_object>>> board;
    final int size;
 
+    /**
+     * Czerwone mrowisko
+     */
     Anthill anthill_red;
+    /**
+     * Niebieskie mrowisko
+     */
     Anthill anthill_blue;
 
 
@@ -26,19 +31,8 @@ public class Board extends JPanel {
             for(int j=0;j<size;j++) {
                 board.get(i).add(new ArrayList<>());
                 board.get(i).get(j).add(null);
+                }
             }
-            }
-
-        JFrame frame = new JFrame("Ants Simulation");
-        frame.setSize(size*21,size*22);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        //frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
-        frame.setLocation(dim.width/2, dim.height/2-frame.getSize().height/2);
-
-        frame.setVisible(true);
-        frame.add(this);
-
     }
     /*void draw_board()
     {
@@ -116,14 +110,8 @@ public class Board extends JPanel {
 
             }
         }
-
-
         anthill_red.history.add(anthill_red.ant_count());
         anthill_blue.history.add(anthill_blue.ant_count());
-
-
-
-
     }
      public List<Board_object> chk_surr(Board_object item)//metoda sprawdzajaca sasiadow i zwracajaca liste wszystkich sasiadow (musze sie jeszcze zastanowic czy jest dobrze)
     {
@@ -475,60 +463,6 @@ public class Board extends JPanel {
             }
             if(flag==false)
                 anthill.delete_ant((Ant) anthill.get_ant(i));
-        }
-    }
-
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-
-        Anthill anthill;
-        Ant ant;
-        Food food;
-        Flying_ant f_ant;
-        Ant_eater ant_eater;
-        Ant_Queen ant_queen;
-
-
-        for (int i = 0; i < board.size(); i++) {
-            if (board.get(i) != null) {
-                for (int j = 0; j < board.get(i).size(); j++) {
-                    if (board.get(i).get(j) != null) {
-                        for (int k = 0; k < board.get(i).get(j).size(); k++) {
-                            if (board.get(i).get(j).get(k) != null) {
-                                if (board.get(i).get(j).get(k) instanceof Anthill) {
-                                    anthill = (Anthill) board.get(i).get(j).get(k);
-                                    anthill.paint_on_board(g);
-
-
-                                }
-                                else if (board.get(i).get(j).get(k) instanceof Flying_ant) {
-                                    f_ant = (Flying_ant) board.get(i).get(j).get(k);
-                                    f_ant.paint_on_board(g);
-                                }
-                                else if (board.get(i).get(j).get(k) instanceof Ant) {
-                                    ant = (Ant) board.get(i).get(j).get(k);
-                                    ant.paint_on_board(g);
-                                }
-                                else if (board.get(i).get(j).get(k) instanceof Food) {
-                                    food = (Food) board.get(i).get(j).get(k);
-                                    food.paint_on_board(g);
-                                }
-                                else if (board.get(i).get(j).get(k) instanceof Ant_eater) {
-                                    ant_eater = (Ant_eater) board.get(i).get(j).get(k);
-                                    ant_eater.paint_on_board(g);
-                                }
-                                if(board.get(i).get(j).get(k)instanceof Ant_Queen){
-                                    ant_queen=(Ant_Queen)board.get(i).get(j).get(k);
-                                    ant_queen.paint_on_board(g);
-                                }
-                            }
-
-                        }
-                    }
-                }
-
-            }
         }
     }
 }

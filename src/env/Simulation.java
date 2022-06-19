@@ -1,32 +1,47 @@
 package env;
 
-import agents.Ant;
 import agents.Ant_eater;
-
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
-import  javax.swing.SwingWorker;
-public class Simulation extends JPanel implements ActionListener {
+public class Simulation implements ActionListener {
     private Board simulation_board;
-
-
-    public JPanelStatistics stats;
+    /**
+     * Panel, na ktorym rysowane sa obiekty
+     */
+    final JPanelSimulation animsim;
+    /**
+     * Niebieskie mrowisko
+     */
     Anthill anthill1;
+    /**
+     * Czerwone mrowisko
+     */
     Anthill anthill2;
+    /**
+     * Rozmiar tablicy (planszy)
+     */
     int size;
-    final int number_of_ant_eaters;//bazowa ilosc mrówkojadów
-    int base_ant_count;//bazowa ilosc mrówek pojawiajacych się na poczatku
-    final int base_food_cout;//bazowa ilosc jedzenia na planszy
+    /**
+     * bazowa ilosc mrowkojadów
+     */
+    final int number_of_ant_eaters;
+    /**
+     * bazowa ilosc mrowek pojawiajacych się na poczatku
+     */
+    int base_ant_count;
+    /**
+     * bazowa ilosc jedzenia na planszyq
+     */
+    final int base_food_cout;
+    /**
+     * Czas miedzy wykonaniem kolejnych petli
+     */
     Timer animationtimer;
     private File file=new File("scenario_2.txt");
     private Scanner scanner;
@@ -72,48 +87,28 @@ public class Simulation extends JPanel implements ActionListener {
             simulation_board.set_Board_object(food_object, food_object.x, food_object.y);
         }
 
-        stats = new JPanelStatistics(this);
+        new JPanelStatistics(this);
+        animsim = new JPanelSimulation(simulation_board);
         animationtimer = new Timer(100, this);
         animationtimer.start();
     }
 
     public static void main(String [] args) throws FileNotFoundException {
-
-
-        Simulation sup_sim=new Simulation();
-        JFrame graph = new JFrame("Graph");
-
-//        GridLayout layout = new GridLayout(1, 2);
-//        graph.setLayout(layout);
-//
-//        graph.setExtendedState(JFrame.MAXIMIZED_BOTH);
-//        graph.setResizable(false);
-//        graph.pack();
-//        graph.setVisible(true);
-
-        graph.setSize(300,400);
-        graph.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        graph.setLocation(dim.width/2-graph.getSize().width/2, dim.height/2-graph.getSize().height/2);
-        graph.setVisible(true);
-        graph.add(sup_sim.stats);
-        //graph.add(sup_sim.simulation_board);
-
-
+        new Simulation();
     }
 
+    /**
+     * Metoda sluzaca do wykonywania kolejnych petli symulacji
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-        //simulation_board.draw_board();
 
         if((anthill1.has_queen_appeared&&anthill1.ant_count()==0)||(anthill2.has_queen_appeared&&anthill2.ant_count()==0))
         {
             System.out.println("Koniec!");
-
             animationtimer.stop();
-
-            JPanelEnding theend = new JPanelEnding(this, simulation_board);
-            animationtimer.stop();
+            new JPanelEnding( simulation_board);
             file=new File("Results.txt");
             try {
                 PrintWriter printWriter=new PrintWriter(file);
@@ -133,14 +128,9 @@ public class Simulation extends JPanel implements ActionListener {
 
         }
         else {
-
             simulation_board.proceed(this);
-            simulation_board.repaint();
+            animsim.repaint();
         }
-
-
-//        System.out.println(anthill1.ant_count());
-//        System.out.println(anthill2.ant_count());
     }
 
 }

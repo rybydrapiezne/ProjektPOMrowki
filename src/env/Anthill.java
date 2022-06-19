@@ -12,14 +12,14 @@ public class Anthill implements Board_object {
    private List<Ant> ants;
     boolean is_main;
     final byte id_anthill;
-    private int width = 25;
-    private int height = 25;
     boolean has_queen_appeared;
     final int ant_number;//ilosc mrowek bazowa
 
     int x, y, x_max, y_max;
-
-    ArrayList<Integer> history = new ArrayList<>();
+    /**
+     * Ilosc mrowek w kazdej petli
+     */
+    protected ArrayList<Integer> history = new ArrayList<>();
     public Anthill(boolean is_main, byte id_anthill, int ant_number, int x, int y,int x_max,int y_max) {
         this.is_main = is_main;
         this.id_anthill = id_anthill;
@@ -42,12 +42,18 @@ public class Anthill implements Board_object {
 
     }
 
+    /**
+     * Metoda tworzaca obiekt typu Ant i dodajaca go do listy mrowek mrowiska
+     */
     public void generate_ant(){
         Ant ant = new Ant(x,y, 1, 1, x_max,y_max, id_anthill);
         ants.add(ant);
 
     }
 
+    /**
+     * Metoda tworzca obiekt typu Flying_ant i dodajaca go do listy mrowek mrowiska
+     */
     public void generate_f_ant(){
         Flying_ant f_ant = new Flying_ant(x, y, 1, 1, x_max, y_max, id_anthill);
         ants.add(f_ant);
@@ -74,7 +80,6 @@ public class Anthill implements Board_object {
     public void delete_ant(Ant ant)
     {
         ants.remove(ant);
-
     }
     public int ant_count() {
 
@@ -95,25 +100,6 @@ public class Anthill implements Board_object {
     @Override
     public Point position() {
         return new Point(x,y);
-    }
-
-
-
-
-
-    @Override
-    public void paint_on_board(Graphics p) {
-
-        if (is_main) {
-            switch (id_anthill) {
-                case 1 -> p.setColor(Color.BLUE);
-                case 2 -> p.setColor(Color.red);
-            }
-
-        } else {
-            p.setColor(Color.BLACK);
-        }
-        p.fillOval(x*20, y*20, width, height);
     }
 }
 

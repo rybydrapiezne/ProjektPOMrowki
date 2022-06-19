@@ -48,11 +48,9 @@ public abstract class Agent  implements Board_object{
         return new Point(x,y);
     }
 
-
-
-
+    /**
+     * Metoda zwracajaca wartosc pola health
+     * @return wartosc pola health
+     */
     public int getHealth(){ return health;}
-
-    @Override
-    public void paint_on_board(Graphics p){}
 }

@@ -11,8 +11,6 @@ enum Quality_Of_Food  {
 public class Food implements Board_object  {
     Quality_Of_Food quality;
     int iteration;
-    private int height =15;
-    private int width = 15;
     int x, y, board_size;
 
 
@@ -42,19 +40,6 @@ public class Food implements Board_object  {
     @Override
     public Point position() {
         return new Point(x,y);
-    }
-
-
-
-    @Override
-    public void paint_on_board(Graphics p) {
-        switch(quality){
-            case LOW -> p.setColor(Color.GRAY);
-            case MEDIUM -> p.setColor(Color.DARK_GRAY);
-            case HIGH -> p.setColor(Color.BLACK);
-        }
-        p.fillOval(x*20,y*20,width, height );
-
     }
 
 }
