@@ -1,5 +1,7 @@
 package agents;
-
+/**
+ * Klasa odpowiadajaca za agenta-krolowa mrowek
+ */
 public class Ant_Queen extends Ant {
     public Ant_Queen(int x, int y, int range, int health, int x_move_range, int y_move_range, byte anthill_id)
     {

@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Klasa odpowiadajaca za symulacje i cala plansze
+ */
 public class Board{
     /**
      * Lista list list typu Board_object, traktowana przez cala symulacje jako plansza, na ktorej dzieje sie symulacja

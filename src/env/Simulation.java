@@ -9,6 +9,10 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Random;
 import java.util.Scanner;
+
+/**
+ * Klasa odpowiadajaca za nadzor calej symulacji
+ */
 public class Simulation implements ActionListener {
     private Board simulation_board;
     /**

@@ -8,6 +8,9 @@ enum Quality_Of_Food  {
 
 
 }
+/**
+ * Klasa odpowiadajaca za jedzenie
+ */
 public class Food implements Board_object  {
     /**
      * Jakosc jedzenia

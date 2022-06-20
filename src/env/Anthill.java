@@ -7,6 +7,9 @@ import agents.Flying_ant;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * Klasa odpowiadajaca za mrowisko
+ */
 
 public class Anthill implements Board_object {
     /**

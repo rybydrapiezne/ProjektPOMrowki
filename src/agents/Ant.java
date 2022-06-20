@@ -1,5 +1,8 @@
 package agents;
 
+/**
+ * Klasa odpowiadajaca za agenta-mrowke
+ */
 public class Ant extends Agent  {
     /**
      * id mrowiska do ktorego dana mrowka nalezy

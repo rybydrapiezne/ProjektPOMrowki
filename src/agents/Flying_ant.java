@@ -1,5 +1,7 @@
 package agents;
-
+/**
+ * Klasa odpowiadajaca za agenta-latajaca mrowke
+ */
 public class Flying_ant extends Ant{
     public Flying_ant(int x,int y,int range,int health,int x_move_range,int y_move_range, byte anthill_id)
     {

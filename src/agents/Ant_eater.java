@@ -1,5 +1,7 @@
 package agents;
-
+/**
+ * Klasa odpowiadajaca za agenta-mrowkojada
+ */
 public class Ant_eater extends Agent {
    public Ant_eater(int x, int y, int range, int health,int x_move_range,int y_move_range)
     {

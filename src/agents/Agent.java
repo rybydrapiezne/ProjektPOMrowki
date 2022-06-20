@@ -5,6 +5,9 @@ import env.Board_object;
 import java.awt.*;
 import java.util.Random;
 
+/**
+ * Klasa abstrakcyjna, po ktorej dziedzicza wszyscy agenci bioracy udzial w symulacji
+ */
 public abstract class Agent  implements Board_object{
     /**
      * Pozycja agenta x
