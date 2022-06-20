@@ -9,8 +9,17 @@ enum Quality_Of_Food  {
 
 }
 public class Food implements Board_object  {
+    /**
+     * Jakosc jedzenia
+     */
     Quality_Of_Food quality;
-    int iteration;
+    /**
+     * sluzy do postarzania jedzenia
+     */
+    private int iteration;
+    /**
+     * pozycja jedzenia
+     */
     int x, y, board_size;
 
 
@@ -23,8 +32,14 @@ public class Food implements Board_object  {
             y=rand.nextInt(0,board_size-1);
         iteration=0;
     }
+
+    /**
+     * Metoda sluzaca do starzenia jedzenia
+     * @param x
+     * @param y
+     */
     @Override
-    public void do_smth(int x,int y) {//starzenie jedzenia
+    public void do_smth(int x,int y) {
         iteration++;
         switch (iteration) {
             case (20) -> quality = Quality_Of_Food.MEDIUM;

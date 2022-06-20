@@ -8,7 +8,13 @@ import java.util.List;
 import java.util.Random;
 
 public class Board{
+    /**
+     * Lista list list typu Board_object, traktowana przez cala symulacje jako plansza, na ktorej dzieje sie symulacja
+     */
     ArrayList<ArrayList<ArrayList<Board_object>>> board;
+    /**
+     * rozmiar planszy
+     */
    final int size;
 
     /**
@@ -34,30 +40,11 @@ public class Board{
                 }
             }
     }
-    /*void draw_board()
-    {
-        //wyswietlanie tekstowe planszy
-        System.out.println("Board");
-        for (ArrayList<ArrayList<Board_object>> arrayLists : board) {
-            if (arrayLists != null) {
-                for (int j = 0; j < arrayLists.size(); j++) {
-                    if (arrayLists.get(j) != null) {
-                        for (int k = 0; k < arrayLists.get(j).size(); k++) {
-                            if (arrayLists.get(j).get(k) != null)
-                                if(arrayLists.get(j).get(k)  instanceof Agent) {
-                                    System.out.print(arrayLists.get(j).get(k) + " " );
 
-                                }
-                          //  else
-                          //      System.out.print(0);
-                        }
-                    }
-                }
-                System.out.println();
-            }
-        }
-        System.out.println("ENDBOARD");
-    }*/
+    /**
+     * Metoda ktora przeprowadza zasadniczo cala symulacje, odpowiada za wywolanie metod odpowiadajacych za konkretne rzeczy w przebiegu symulacji t.j poruszanie sie agentow, starzenie jedzenia
+     * @param sim
+     */
     public void proceed(Simulation sim)
     {
         int x_temp=-1;
@@ -113,6 +100,12 @@ public class Board{
         anthill_red.history.add(anthill_red.ant_count());
         anthill_blue.history.add(anthill_blue.ant_count());
     }
+
+    /**
+     * Metoda sluzaca do sprawdzenia sasiadow znajdujacych sie w zasiegu jedzenia w celu znalezienia jedzenia
+     * @param item agent, ktorego sasiadow sprawdzamy
+     * @return zwraca liste obiektow znajdujacych sie w obrebie agenta
+     */
      public List<Board_object> chk_surr(Board_object item)//metoda sprawdzajaca sasiadow i zwracajaca liste wszystkich sasiadow (musze sie jeszcze zastanowic czy jest dobrze)
     {
         ArrayList<Board_object> surroundings=new ArrayList<>();
@@ -134,7 +127,14 @@ public class Board{
                }
                    return surroundings;
     }
-    public void set_Board_object(Board_object thing,int x,int y)//metoda sluzaca do wpisania obiektu do listy
+
+    /**
+     * metoda sluzaca do wpisania obiektu do planszy
+     * @param thing obiekt ktory wstawiamy do planszy
+     * @param x jego pozycja x
+     * @param y jego pozycja y
+     */
+    public void set_Board_object(Board_object thing,int x,int y)
     {
         if(board.get(x).get(y).contains(null))
             board.get(x).get(y).clear();
@@ -143,6 +143,12 @@ public class Board{
 
 
     }
+
+    /**
+     * Metoda wykonujaca faktyczny ruch po planszy zmieniajac pozycje obiektow na planszy w przypadku gdy ich pozycja sie zmienila
+     * @param thing obiekt, dla ktorego nastepuje przesuniecie
+     * @param old_position punkt, ktory jest jego pozycja na planszy przed przesunieciem (w przypadku gdy pozycja obiektu nie zmienila swoich wartosci przesuniecie nie nastepuje)
+     */
     public void move_Board_object(Board_object thing,Point old_position)
     {
         if(thing.position()!=null)
@@ -157,12 +163,32 @@ public class Board{
 
     }
 
+    /**
+     * Metoda spinajaca wszelkie mozliwe kolizje istotne dla symulacji
+     * @param list lista obiektow znajdujacych sie na danym polu
+     * @param sim
+     */
     public void ant_collision(ArrayList<Board_object>list, Simulation sim) {
+        /**
+         * sluzy do okreslania w pozniejszych etapach id mrowiska agenta
+         */
         int id;
+        /**
+         * w przypadku kolizji mrowek przypisana jedna z nich zostaje do tej wartosci
+         */
         Ant ant1 = null;
+        /**
+         * w przypadku kolizji mrowek przypisana jedna z nich zostaje do tej wartosci
+         */
         Ant ant2 = null;
         Ant ant_temp = null;
+        /**
+         * w przypadku kolizji z jedzeniem przypisane zostaje do tej wartosci
+         */
         Food food = null;
+        /**
+         * w przypadku kolizji z mrowkojadem przypisany zostaje do tej wartosci
+         */
         Ant_eater ant_eater = null;
         Ant_Queen ant_queen1=null;
         Ant_Queen ant_queen2=null;
@@ -211,7 +237,7 @@ public class Board{
             }
 
         }
-        if (ant1 != null && ant2 != null) {//walka mrówek
+        if (ant1 != null && ant2 != null) {//walka mrowek
             if (sim.anthill1.id_anthill == ant1.anthill_id) {
                 do {
                     one = rand.nextInt(0, ant1.getHealth()*sim.anthill1.ant_count());
@@ -312,7 +338,7 @@ public class Board{
 
                     }
 
-                    if(ant_queen1!=null)//w przypadku gdy mrowisko nie istnieje pojawia sie królowa
+                    if(ant_queen1!=null)//w przypadku gdy mrowisko nie istnieje pojawia sie krolowa
                     {
                         sim.anthill1.create_anthill(ant_queen1.x, ant_queen1.y);
                         set_Board_object(sim.anthill1,sim.anthill1.x,sim.anthill1.y);
@@ -345,7 +371,7 @@ public class Board{
 
             }
         }
-        if(ant_eater!=null)//mrówka walczy z mrówkojadem
+        if(ant_eater!=null)//mrowka walczy z mrowkojadem
         {
             if(ant1!=null||ant2!=null)
             {
@@ -416,7 +442,11 @@ public class Board{
         }
     }
 
-    public void release_queen(Simulation sim)//metoda sluzaca do wypuszczenia królowej z mrowiska i usunięcia mrowiska z planszy
+    /**
+     * Metoda sluzaca do stworzenia krolowej w przypadku gdy liczba mrowek w mrowisku wynosi 0 oraz usuniecia mrowiska z planszy
+     * @param sim
+     */
+    public void release_queen(Simulation sim)
     {
         Anthill anthill_temp=null;
         if(sim.anthill1.ant_count()==0) {
@@ -440,7 +470,11 @@ public class Board{
     }
 
 
-    private void get_rid(Anthill anthill)//metoda naprawiająca pewnego buga w kodzie
+    /**
+     * Metoda poprawiajaca pewnego buga w kodzie polegajacego na tym, ze liczba mrowek na planszy i mrowek w liscie w mrowisku sie nie zgadza (mrowki nie znikaly samoistnie po prostu z jakiegos powodu nie znikaly z lsity w mrowisku)
+     *@param anthill mrowisko, ktorego sprawdzamy zgodnosc listy mrowek z tym co sie faktycznie znajduje na planszy
+     */
+    private void get_rid(Anthill anthill)//metoda naprawiajaca pewnego buga w kodzie
     {
         boolean flag=false;
         for(int i=0;i<anthill.ant_count();i++)

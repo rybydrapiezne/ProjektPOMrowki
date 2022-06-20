@@ -6,6 +6,11 @@ public class Ant_eater extends Agent {
         super(x,y,range,health,x_move_range,y_move_range);
     }
 
+    /**
+     * zadnych zmian w porównaniu z klasa nadrzedna
+     * @param x pozycja x
+     * @param y pozycja y
+     */
     @Override
     public void do_smth(int x,int y) {
         super.do_smth(x,y);

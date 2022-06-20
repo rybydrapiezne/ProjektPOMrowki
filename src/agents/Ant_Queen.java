@@ -5,6 +5,11 @@ public class Ant_Queen extends Ant {
     {
     super(x,y,range+1,health+4,x_move_range,y_move_range, anthill_id);
     }
+    /**
+     * zadnych zmian w porownaniu z klasa nadrzedna
+     * @param x pozycja x
+     * @param y pozycja y
+     */
     @Override
     public void do_smth(int x,int y) {
         super.do_smth(x,y);

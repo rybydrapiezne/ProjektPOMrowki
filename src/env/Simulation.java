@@ -28,11 +28,11 @@ public class Simulation implements ActionListener {
      */
     int size;
     /**
-     * bazowa ilosc mrowkojadów
+     * bazowa ilosc mrowkojadow
      */
     final int number_of_ant_eaters;
     /**
-     * bazowa ilosc mrowek pojawiajacych się na poczatku
+     * bazowa ilosc mrowek pojawiajacych sie na poczatku
      */
     int base_ant_count;
     /**
@@ -43,7 +43,13 @@ public class Simulation implements ActionListener {
      * Czas miedzy wykonaniem kolejnych petli
      */
     Timer animationtimer;
+    /**
+     * pobieranie z pliku
+     */
     private File file=new File("scenario_2.txt");
+    /**
+     * pobieranie z pliku
+     */
     private Scanner scanner;
 
     Simulation() throws FileNotFoundException {
