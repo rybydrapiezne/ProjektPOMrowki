@@ -50,7 +50,7 @@ public class Simulation implements ActionListener {
     /**
      * pobieranie z pliku
      */
-    private File file=new File("scenario_2.txt");
+    private File file=new File("scenario_1.txt");
     /**
      * pobieranie z pliku
      */
